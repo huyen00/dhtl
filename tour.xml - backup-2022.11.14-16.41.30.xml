@@ -1,0 +1,1456 @@
+﻿<krpano version="1.20.6" title="Virtual Tour" logkey="false" showerrors="false">
+   
+<include url="action_html.xml" />
+
+	
+      <!-- <include url="plugins/showtext.xml" /> -->
+    <!-- <include url="plugins/polygonal_hotspots_editor.xml" if="calc(editor)" /> -->
+    <!-- <include url="plugins/dragg/dragg.xml"  /> -->
+    <include url="option.xml" />
+    <include url="update.xml" />
+ <include url="skin/vtourskin.xml" />
+    <include url="plugins/popup_blur.xml" />
+    <include url="plugins/youtube_player.xml" />
+    <include url="plugins/showtext.xml" />
+          
+	<include url="add_hotspot/plugins_l/add_hotspot.xml" if="calc(editor)"/>
+    <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/poligon.xml" if="calc(editor)"/>
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/vid_hs.xml" if="calc(editor)"/>
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/sound_hs.xml" if="calc(editor)"/>
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/photo.xml" if="calc(editor)"/>
+	<include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/youtube.xml" if="calc(editor)"/>
+    <editor_hs pin="mihailov04@ya.ru" />
+	<include url="plugins/video_player.xml" />
+
+    <!-- <include url="index_skin.xml"/> -->
+    <!-- <include url="index_core.xml"/>
+    <include url="index_messages_en.xml"/> -->
+
+
+	
+	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+	<skin_settings
+       maps="true"
+       maps_type="google"
+       maps_bing_api_key=""
+       maps_google_api_key=""
+       maps_zoombuttons="false"
+       maps_loadonfirstuse="true"
+       gyro="true"
+       gyro_keeplookingdirection="false"
+       webvr="true"
+       webvr_keeplookingdirection="true"
+       webvr_prev_next_hotspots="true"
+       autotour="false"
+       littleplanetintro="false"
+       followmousecontrol="false"
+       title="true"
+       thumbs="true"
+       thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+       thumbs_opened="false"
+       thumbs_text="false"
+       thumbs_dragging="true"
+       thumbs_onhoverscrolling="false"
+       thumbs_scrollbuttons="false"
+       thumbs_scrollindicator="false"
+       thumbs_loop="false"
+       tooltips_buttons="false"
+       tooltips_thumbs="false"
+       tooltips_hotspots="false"
+       tooltips_mapspots="false"
+       deeplinking="false"
+       loadscene_flags="MERGE"
+       loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+       loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+       loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+       loadingtext="loading..."
+       layout_width="100%"
+       layout_maxwidth="814"
+       controlbar_width="-24"
+       controlbar_height="40"
+       controlbar_offset="20"
+       controlbar_offset_closed="-40"
+       controlbar_overlap.no-fractionalscaling="10"
+       controlbar_overlap.fractionalscaling="0"
+       design_skin_images="vtourskin.png"
+       design_bgcolor="0x2D3E50"
+       design_bgalpha="0.8"
+       design_bgborder="0"
+       design_bgroundedge="1"
+       design_bgshadow="0 4 10 0x000000 0.3"
+       design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+       design_thumbborder_padding="2"
+       design_thumbborder_bgroundedge="0"
+       design_text_css="color:#FFFFFF; font-family:Arial;"
+       design_text_shadow="1"
+
+    />
+
+    <skin_settings
+		devices="mobile|tablet"
+	/>
+
+
+	<!--
+	    For an alternative skin design either change the <skin_settings> values
+	    from above or optionally include one of the predefined designs from below.
+	-->
+	<!-- <include url="skin/vtourskin_design_flat_light.xml"  /> -->
+	<!-- <include url="skin/vtourskin_design_glass.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+	<!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+	<!-- <include url="skin/vtourskin_design_black.xml"       /> -->
+
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+    
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+  
+         playsound(bgsound, assets/bgsound1.mp3, true, 0.8);
+		set(layer[mapfull].visible,false);
+		set( layer[map2].visible, false);
+        linkscene_title_xml("");  
+		<!-- showlog();
+  trace(xml.scene); -->
+       
+        <!-- if(device.panovideosupport == false, error('Sorry, but panoramic videos are not supported by your current browser!'); , loadscene(videopano); ); -->
+       
+		
+	</action>
+	<action name="active_option">
+		set(layer[%1].bgcolor, 0xDF7F2C);
+		set(atH,get(view.hlookat));
+		set(atV,get(view.vlookat));
+		loadscene("%2",null, MERGE);
+		lookat(get(atH),get(atV));
+	</action>
+    <action name="remove_active">
+		set(layer[%1].bgcolor, 0x1F3C22);
+	</action>
+		
+	
+    <action name= "showHotSpot">
+		showtext([img src=%1 height=120px width=220px][/img][p style="color="#FF00FF""]%2[/p],Target);
+	</action>
+
+
+	<scene name="scene_f10tongthesuoitien2_tongthechung2_notelocation" title="Toàn cảnh Tràng An" onstart="" thumburl="panos/f10tongthesuoitien2_tongthechung2_notelocation.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="104.565" vlookat="11.627" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f10tongthesuoitien2_tongthechung2_notelocation.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f10tongthesuoitien2_tongthechung2_notelocation.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="Iconcallout_point_straight_blue" ath="159.484" atv="14.735" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot2" style="Iconcallout_point_straight_blue" ath="84.735" atv="14"  distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot3" style="Iconcallout_point_straight_blue" ath="56.830" atv="5.637" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot4" style="Iconcallout_point_straight_blue" ath="62.065" atv="8.372" distorted="false" zoom="false" linkedscene="scene_f4hangtoi_cuahang" />
+		<hotspot name="spot5" style="Iconcallout_point_straight_blue" ath="48.184" atv="6.073" distorted="false" zoom="false" linkedscene="scene_l5hangsang_tronghang" />
+		<hotspot name="spot6" style="Iconcallout_point_straight_blue" ath="30.54" atv="7.095" distorted="false" zoom="false" linkedscene="scene_f6hangnauruou_dentran" />
+		<hotspot name="spot7" style="Iconcallout_point_straight_blue" ath="76.214" atv="17.086" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang1" />
+		<hotspot name="spot8" style="Iconcallout_point_straight_blue" ath="143.711" atv="32.841" distorted="false" zoom="false" linkedscene="scene_f9denducthanhcaoson" />
+		<hotspot name="spot9" style="Iconcallout_point_straight_blue" ath="-24.853" atv="29.232" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_blue"  ath="-164.769" atv="34.153" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_chinhdien1" />
+
+
+		<hotspot name="spot11" style="Iconcallout_point_straight_brown"  ath="121.99" atv="2.296" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+	</scene>
+	<scene name="scene_f1benthuyen1" title="Bến Thuyền" onstart="" thumburl="panos/f1benthuyen1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-30.278" vlookat="11.334" fovtype="MFOV" fov="123.999" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f1benthuyen1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f1benthuyen1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-3.827" atv="0.065" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot2" style="hs_flycam"  ath="-42.259" atv="-24.958" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="5.707" atv="20.214" distorted="false" zoom="false" onhover="Thông tin Bến Thuyền" onclick="js(showform('Bến Thuyền','Bến thuyền Tràng An có đến 2000 thuyền để phục vụ du khách nhưng thực hiện rất quy củ, an toàn, sạch sẽ. Bãi để xe rộng lớn, có đường hầm riêng dẫn sang khu bến thuyền nên đảm bảo an toàn và không gây tắc nghẽn giao thông.'))" />
+		
+
+	</scene>
+
+	<scene name="scene_f2dentrinh1_equi" title=" Đền Trình" onstart="" thumburl="panos/f2dentrinh1_equi.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-12.763" vlookat="-3.764" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f2dentrinh1_equi.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f2dentrinh1_equi.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle"  ath="-164.586" atv="2.134" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-20.186" atv="26.710" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_truoccuatrensong" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="20.692" atv="4.302" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang1" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="42.164" atv="-2.721" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot5" style="hs_flycam"   ath="-29.358" atv="-40.753"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+	<scene name="scene_l2dentrinh_truoccuatrensong" title="Thuyền ra/vào Đền Trình" onstart="" thumburl="panos/l2dentrinh_truoccuatrensong.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-6.148" vlookat="-10.591" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l2dentrinh_truoccuatrensong.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l2dentrinh_truoccuatrensong.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="0.874" atv="-7.362" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_cuadenchinh" />
+		<hotspot name="spot2" style="skin_hotspotstyle"  ath="36.337" atv="-3.455" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang1" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="61.270" atv="-4.660" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot4" style="hs_flycam"  ath="-9.855" atv="-47.859" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="-147.787" atv="-1.176" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot6" style="hs_flycam" ath="-165.293" atv="-43.998" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+
+	</scene>
+
+	
+
+	<scene name="scene_l2dentrinh_cuadenchinh" title="Cửa Đền Trình " onstart="" thumburl="panos/l2dentrinh_cuadenchinh.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-1.590" vlookat="0.000" fovtype="MFOV" fov="123.999" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l2dentrinh_cuadenchinh.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l2dentrinh_cuadenchinh.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="52.638" atv="8.703" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_denco" />
+		<hotspot name="spot2" style="hs_flycam" ath="172.711" atv="-25.828" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-23.661" atv="20.300" distorted="false" zoom="false"  onhover="Thông tin Đền Trình" onclick="js(showform('Đền Trình','Đền Trình Tràng An nằm dưới chân núi theo thế “tựa sơn, hướng thủy” đã hơn 1000 năm tuổi. Đền Trình không chỉ là điểm dừng chân mang ý nghĩa trình diện khi du khách đến tham quan KDL sinh thái Tràng An Ninh Bình, mà còn là “nhân chứng” lịch sử cho cuộc xung đột giữa tướng sĩ triều Đinh và triều đình nhà Lê.
+		Trình có nghĩa là trình báo trình diện để chuyến thăm quan của du khách được may mắn và an toàn. Ngoài ý nghĩa về mặt trình báo, ngôi đền này còn mang ý nghĩa về mặt lịch sử. Nơi đây chứng kiến sự xung đột giữa các tướng sĩ triều Đinh và triều đình nhà Lê, nên trước đây ngôi đền có tên là Phủ Đột. Năm 2003 ngôi đền được trung tu xây dựng lại khang trang hơn, vật liệu hoàn toàn bằng gỗ tứ thiết( Đinh, Lim, Sến, Táu), theo kiến trúc chữ đinh. Bát hương công đồng ngoài trung thiên thờ công đồng các tướng sĩ nhà Đinh, trong bái đường thờ các vị quan giám sát là Tả Thanh Trù và Hữu Thanh Trù giám sát đại tướng quân, các ngài là những người coi quản quốc khố, kho vàng, kho bạc của nhà Đinh.
+			Năm 979, khi triêu đình sảy ra biến loạn các ngài đã có công bế ấu chúa Đinh Toàn mới có 6 tuổi vào ẩn nấp trong núi rừng phía nam để lánh nạn, tránh sự truy sát của nhà Lê.
+			Bên trong tẩm cung thờ tứ trụ triều đình nhà Đinh: Đinh Điền, Nguyễn  Bặc, Trịnh Tú, Lưu Cơ. Đây là những bậc khai quốc công thần của nhà Đinh, có công đầu trong việc dẹp loạn 12 sứ quân thống nhất đất nước đưa Đinh Bộ Lĩnh lên ngôi hoàng đế.
+			Bên cạnh ngôi đền còn 2 ngôi phủ cổ, ngôi phủ cổ đầu tiên được xây dựng năm 1565 vào thế kỉ 16, ngôi phủ thứ 2 được xây dựng năm 1825 vào thế kỉ 19, bên trong ngôi phủ thờ trung thần tướng sĩ triều đinh, thờ bằng bài vị không thờ tượng bất kỳ ai.
+			Trước cửa đền có 2 ông cá chép cỡ lớn bằng đá với ý nghĩa tâm linh mong muốn cuộc sống ấm no hạnh phúc, mưa thuận gió hòa, quốc thái dân an.
+			'))" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="104.116" atv="10.025" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_truoccuatrensong" />
+
+	</scene>
+
+	<scene name="scene_l2dentrinh_denco" title="Đền Trình - Đền Cổ" onstart="" thumburl="panos/l2dentrinh_denco.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-4.264" vlookat="-9.307" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l2dentrinh_denco.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l2dentrinh_denco.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-92.378" atv="9.656" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_cuadenchinh" />
+		<hotspot name="spot2" style="skin_hotspotstyle_info" ath="-3.947" atv="8.828" distorted="false" zoom="false" onhover="Thông tin Đền Trình" onclick="js(showform('Đền Trình','Đền Trình Tràng An nằm dưới chân núi theo thế “tựa sơn, hướng thủy” đã hơn 1000 năm tuổi. Đền Trình không chỉ là điểm dừng chân mang ý nghĩa trình diện khi du khách đến tham quan KDL sinh thái Tràng An Ninh Bình, mà còn là “nhân chứng” lịch sử cho cuộc xung đột giữa tướng sĩ triều Đinh và triều đình nhà Lê.
+		Trình có nghĩa là trình báo trình diện để chuyến thăm quan của du khách được may mắn và an toàn. Ngoài ý nghĩa về mặt trình báo, ngôi đền này còn mang ý nghĩa về mặt lịch sử. Nơi đây chứng kiến sự xung đột giữa các tướng sĩ triều Đinh và triều đình nhà Lê, nên trước đây ngôi đền có tên là Phủ Đột. Năm 2003 ngôi đền được trung tu xây dựng lại khang trang hơn, vật liệu hoàn toàn bằng gỗ tứ thiết( Đinh, Lim, Sến, Táu), theo kiến trúc chữ đinh. Bát hương công đồng ngoài trung thiên thờ công đồng các tướng sĩ nhà Đinh, trong bái đường thờ các vị quan giám sát là Tả Thanh Trù và Hữu Thanh Trù giám sát đại tướng quân, các ngài là những người coi quản quốc khố, kho vàng, kho bạc của nhà Đinh.
+			Năm 979, khi triêu đình sảy ra biến loạn các ngài đã có công bế ấu chúa Đinh Toàn mới có 6 tuổi vào ẩn nấp trong núi rừng phía nam để lánh nạn, tránh sự truy sát của nhà Lê.
+			Bên trong tẩm cung thờ tứ trụ triều đình nhà Đinh: Đinh Điền, Nguyễn  Bặc, Trịnh Tú, Lưu Cơ. Đây là những bậc khai quốc công thần của nhà Đinh, có công đầu trong việc dẹp loạn 12 sứ quân thống nhất đất nước đưa Đinh Bộ Lĩnh lên ngôi hoàng đế.
+			Bên cạnh ngôi đền còn 2 ngôi phủ cổ, ngôi phủ cổ đầu tiên được xây dựng năm 1565 vào thế kỉ 16, ngôi phủ thứ 2 được xây dựng năm 1825 vào thế kỉ 19, bên trong ngôi phủ thờ trung thần tướng sĩ triều đinh, thờ bằng bài vị không thờ tượng bất kỳ ai.
+			Trước cửa đền có 2 ông cá chép cỡ lớn bằng đá với ý nghĩa tâm linh mong muốn cuộc sống ấm no hạnh phúc, mưa thuận gió hòa, quốc thái dân an.
+			'))" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="123.938" atv="5.518" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang1" />
+	</scene>
+
+	
+
+	<scene name="scene_f3congtamquan" title="Cổng Tam Quan" onstart="" thumburl="panos/f3congtamquan.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-4.287" vlookat="-0.732" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f3congtamquan.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f3congtamquan.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="hs_flycam" ath="19.737" atv="-34.007"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="101.809" atv="10.652" distorted="false" zoom="false" linkedscene="scene_f4hangtoi_cuahang" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-141.498" atv="9.385" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+
+	</scene>
+
+	<scene name="scene_f4hangtoi_cuahang" title="Hang Tối" onstart="" thumburl="panos/f4hangtoi_cuahang.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f4hangtoi_cuahang.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f4hangtoi_cuahang.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="1.421" atv="16.372" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_cuahang1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-125.533" atv="-14.295" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-175.214" atv="0.504" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot4" style="hs_flycam" ath="-60.876" atv="-49.93" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+
+
+
+	<scene name="scene_l4hangtoi_cuahang1" title="Bên ngoài Hang Tối" onstart="" thumburl="panos/l4hangtoi_cuahang1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l4hangtoi_cuahang1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l4hangtoi_cuahang1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="0.019" atv="2.639" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_cuahang2" />
+		<hotspot name="spot2" style="hs_flycam" ath="176.733" atv="-27.552" distorted="false" zoom="false" linkedscene="scene_f4hangtoi_cuahang" />
+		<hotspot name="spot3" style="skin_hotspotstyle"  ath="-179.619" atv="-1.111" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="-135.165" atv="-24.143" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot5" style="hs_flycam" ath="-101.742" atv="-42.688"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+
+	<scene name="scene_l4hangtoi_cuahang2" title="Lối ra/vào Hang Tối" onstart="" thumburl="panos/l4hangtoi_cuahang2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l4hangtoi_cuahang2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l4hangtoi_cuahang2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-9.395" atv="7.426" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_tronghang" />
+		<hotspot name="spot2" style="hs_flycam" ath="171.294" atv="-36.687" distorted="false" zoom="false" linkedscene="scene_f4hangtoi_cuahang" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="156.796" atv="3.939" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_cuahang1" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="27.769" atv="-10.422"  distorted="false" zoom="false" onhover="Thông tin Hang Tối" onclick="js(showform('Hang Tối','Gọi là hang Tối vì hang nhỏ, hẹp nên rất tối. Hang Tối dài 320m, độ sâu khoảng 1,4m, vòm hang cao từ 1 - 6m. Vòm hang nhiều chỗ có mặt cắt hình tam giác, chỉ đủ một chiếc thuyền nan nhỏ đi vừa. Bên trong hang có hai khoảng trống rộng, vòm trần có những nhũ đá như hình một chiếc màn lớn, nên thường gọi là khu “Màn vóc”. Lại có chỗ có một ngách cụt nhỏ, trước kia nhân dân đi qua không có đèn, dễ bị lạc vào ngách này nên gọi là ngách Lầm.'))" />
+		
+
+	</scene>
+
+	<scene name="scene_l4hangtoi_tronghang" title=" Hang Tối 01" onstart="" thumburl="panos/l4hangtoi_tronghang.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l4hangtoi_tronghang.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l4hangtoi_tronghang.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-13.438" atv="-2.118" distorted="false" zoom="false" linkedscene="scene_l5hangsang_tronghang" />
+		<hotspot name="spot2" style="skin_hotspotstyle_prev"  ath="164.048" atv="-8.872" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_cuahang2" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="16.375" atv="-7.383" distorted="false" zoom="false" onhover="Thông tin Hang Tối" onclick="js(showform('Hang Tối','Gọi là hang Tối vì hang nhỏ, hẹp nên rất tối. Hang Tối dài 320m, độ sâu khoảng 1,4m, vòm hang cao từ 1 - 6m. Vòm hang nhiều chỗ có mặt cắt hình tam giác, chỉ đủ một chiếc thuyền nan nhỏ đi vừa. Bên trong hang có hai khoảng trống rộng, vòm trần có những nhũ đá như hình một chiếc màn lớn, nên thường gọi là khu “Màn vóc”. Lại có chỗ có một ngách cụt nhỏ, trước kia nhân dân đi qua không có đèn, dễ bị lạc vào ngách này nên gọi là ngách Lầm.'))" />
+
+	</scene>
+
+	<scene name="scene_l5hangsang_tronghang" title="Hang Sáng" onstart="" thumburl="panos/l5hangsang_tronghang.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l5hangsang_tronghang.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l5hangsang_tronghang.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-28.627" atv="1.670" distorted="false" zoom="false" linkedscene="scene_l6hangnauruou_1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_prev" ath="168.157" atv="-0.428" distorted="false" zoom="false" linkedscene="scene_l4hangtoi_tronghang" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="7.315" atv="-13.642" distorted="false" zoom="false" onhover="Thông tin Hang Sáng" onclick="js(showform('Hang Sáng ','Hang dài 120m, độ sâu khoảng 1,5m, vòm hang cao từ 1 - 2m. Trong hang khá thoáng, mát, ánh sáng vừa đủ để du khách có thể ngắm nhìn các nhũ đá trên trần và các vách hang.'))" />
+		
+		
+
+	</scene>
+	
+
+	<scene name="scene_l6hangnauruou_1" title="Hang Nấu Rượu" onstart="" thumburl="panos/l6hangnauruou_1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="33.044" vlookat="12.023" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l6hangnauruou_1.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/l6hangnauruou_1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="10.790" atv="-5.898" distorted="false" zoom="false" linkedscene="scene_l6hangnauruou_dentran1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_prev" ath="-178.490" atv="-3.594" distorted="false" zoom="false" linkedscene="scene_l5hangsang_tronghang" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="33.685" atv="-8.706" distorted="false" zoom="false" onhover="Thông tin Hang Nấu Rượu" onclick="js(showform('Hang Nấu Rượu ','Gọi là hang Nấu Rượu vì trước đây, khi đi làm ruộng, nhân dân trong vùng thấy nhiều chum, vò sành và nậm rượu trong hang. Tương truyền, xưa kia vua Đinh thường chưng cất rượu ở hang này. Độ dài của hang khoảng 250m, độ sâu khoảng 1,5 - 2m, vòm hang cao từ 3 - 5m. Đây là hang có vòm cao nhất, không khí thoáng và mát mẻ nhất, đi lại bằng thuyền nan cũng thuận tiện nhất và dòng nước cũng trong lành nhất.'))" />
+		
+
+	</scene>
+	<scene name="scene_f6hangnauruou_dentran" title="Hang Nấu Rượu - Đền Trần" onstart="" thumburl="panos/f6hangnauruou_dentran.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f6hangnauruou_dentran.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f6hangnauruou_dentran.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="147.038" atv="9.323" distorted="false" zoom="false" linkedscene="scene_l6hangnauruou_1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-14.897" atv="2.562" distorted="false" zoom="false" linkedscene="scene_l7dentran2" />
+		<hotspot name="spot3" style="hs_flycam" ath="-90.516" atv="-40.177" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		
+
+	</scene>
+	<scene name="scene_l6hangnauruou_dentran1" title="Bên ngoài Hang Nấu Rượu lên Đền Trần" onstart="" thumburl="panos/l6hangnauruou_dentran1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="364.567" vlookat="-10.558" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l6hangnauruou_dentran1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l6hangnauruou_dentran1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_prev" ath="-131.164" atv="-3.247" distorted="false" zoom="false" linkedscene="scene_l6hangnauruou_1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="25.529" atv="-1.105" distorted="false" zoom="false" linkedscene="scene_l7dentran2" />
+		<hotspot name="spot3" style="hs_flycam" ath="-98.523" atv="-37.825" distorted="false" zoom="false" linkedscene="scene_f6hangnauruou_dentran" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="35.206" atv="-0.642" distorted="false" zoom="false" onhover="Thông tin Đền Trần" onclick="js(showform('Đền Trần ','Có tên gọi là đền Trần nhưng không thờ vua hay tướng nhà Trần mà thờ một vị tướng có từ thời Hùng Vương thứ 18, có tước hiệu là Thánh Quý Minh Đại Vương. Vào thời Hùng Vương ông là một bậc trung hưng tướng, nhưng khi được giao cai quản trời Nam thì được phong tước là Thượng Đẳng Thần. Để tìm hiểu rõ hơn về ngôi đền xin ngược dòng thời gian trở về thế kỷ X, khi Đinh Bộ Lĩnh thống nhất đất nước lên ngôi hoàng đế đặt tên nước là Đại Cồ Việt, lấy niên hiệu là Thái Bình, chọn Hoa Lư làm kinh đô, cho xây dựng 4 ngôi đền theo 4 hướng Đông- Tây- Nam- Bắc và mượn uy danh của đức thánh ngài trấn trạch cho kinh đô Hoa Lư. Đây là ngôi đền tứ trấn phía Nam của nhà Đinh. Đến năm 1258 sau lần dẹp loạn quân Nguyên - Mông lần thứ nhất vua Trần Thái Tông vị vua đầu tiên của nhà Trần (tức Trần Cảnh) đã nhường ngôi lại cho con trai và lui về giữ cương vị Thái Thượng Hoàng. Lúc đó ông vừa tròn 40 tuổi đã dẫn theo một số quân quyền, phật tử về tu hành tại đây. Về tới đây ông thấy ngôi đền nhà Đinh được xây dựng bằng gỗ đã bị hư hại nên xin phép được chuyển ngôi đền từ gỗ sang thành ngôi đền đá sao y chính bản. Bên cạnh cho xây một ngôi chùa thờ Phật thờ  Mẫu. Qua thời gian ngôi chùa đã bị hư hại, nơi đây chỉ còn bệ thờ mẫu Huyền Thiên công chúa một trong tứ bất tử của Việt Nam. Quay ngược trở lại với kiến trúc của ngôi đền, theo thời gian ngôi đền được trùng tu nhưng vẫn giữ nguyên dáng vẻ của một ngôi đền cổ có niên đại hơn 762 năm. Từ sau lần trùng tu thứ nhất 1258 với 12 cột đá dầm xà ngưỡng ngạch và lợp mái hiên trên bằng đá, bên trong được cuốn vòm vật liệu chủ yếu là vôi, mật mía và giấy bạc. Trên mái xưa kia được lát bằng gạch thất cải chữ công. Cuối thế kỷ XIX đầu XX được trùng tu thêm một lớp vôi vữa xi măng  để ngôi đền có dáng vẻ như ngày hôm nay.Trên các cột đá người xưa đã tạc tất cả các nét hoa văn trên nền đá xanh nguyên khối lấy từ núi Nhồi - Thanh Hóa. Tạc lên đây bằng tâm, bằng đức ,bằng trí tuệ chứ không phải tiền bạc, cơ chế nên du khách có thể thấy tất cả các đường nét hoa văn rất mềm mại, sống động, tinh tế như muốn gửi gắm tâm tư, nguyện vọng của con người. 
+			Cột đá nơi đây được tạc theo tích tứ linh Long - Ly - Quy và Phượng. Long đại diện cho quyền lực, Ly đại diện cho sức mạnh sự may mắn cát tường, Quy thể hiện cho sự trường tồn vĩnh cửu và ở phía trên đỉnh các cột là thể hiện các cụ Phượng thể hiện cho sự thanh cao thoát tục. Người đời xưa đã gửi gắm vào đây với 4 điều tâm linh cầu may vào 4 cột đá ở hàng thứ nhất.
+			Cột 1 cụ Phượng với hai cánh dang rộng mỏ to mắt sáng nhìn chếch về phía dưới thể hiện cho thế thượng võ, miệng công theo dải lụa đào và cuốn thư thể hiện cho thế thượng văn, ở cột này văn võ song toàn cầu về công danh sự nghiệp.
+			Cột 2 ở đây cụ Phượng với tư thế bay cao, bay xa bay tít tầng mây trên lưng còn điểm lại áng mây hồng, mỏ cong mắt sáng miệng cũng công theo dải lụa và cuốn thư thể hiện cho lời ăn tiếng nói. Người xưa còn để lại nơi đây câu thơ: 
+			Mồng 5 cá đi ăn thề
+			Mồng 8 cá về cá vượt vũ môn
+			Thể hiện cho các bậc sỹ tử qua các kỳ thi vì thế mà cột này cầu về tài đức trí tuệ.
+				Cột 3 cụ Phượng không còn hoàn thiện ,hoàn mỹ nhưng cũng có thể thấy đầu đội trời chân đạp đất, hai cánh dang rộng, đôi chân nhỏ chắc khỏe. Ở đây tình nghĩa vua tôi kết thành một khối sức mạnh tập thể, vì thế cột này cầu về sức khỏe phù đổng.
+					Trên đây cuộc đời con người ta dù thành công tới mức độ phi phàm, đến đỉnh cao cuộc sống có công danh, địa vị tiền tài, sức khỏe nhưng cũng không thể thiếu được cột thứ 4 với ý nghĩa thâm thúy hơn. Một lần nữa người đời xưa đã thể chế hóa lại cụ Phượng với hai cánh đan chéo vào nhau giống hình trái tim, ở đây rồng  dáng hạ hút nước, khi dòng nước được cuốn lên ông rùa từ đầm sen ló ra ông cá rô cũng ngỡ mình được quy tiên nên cũng ngoi theo dòng nước đi lên. Cổ nhân có để lại nơi đây đôi câu thơ:
+			Dập dìu cánh hạc chơi vơi
+			Tiễn thuyền vua Lý đang dời kinh đô
+			Khi đi nhớ cậu cùng cô
+			Khi về lại nhớ cá rô Tổng Trường
+			Cá rô Tổng Trường ở đây cũng ngụ ý khoe đặc sản của quê hương một đặc sản dùng để tiến vua nhưng ngụ ý sâu xa phía sau, cá rô lại thể hiện cho người phụ nữ mỗi lần sinh nở là mỗi lần vượt cạn. Các đấng minh quân dù tài cao đức trọng, dù thành công đến mức độ phi phàm thì không thể thiếu nửa cuộc đời của mình, giúp cho các đứng minh quân có được thành công chính là người phụ nữ. Vì thế ở đây quần thể trời đất hòa thuận ôm ấp lấy trái tim lồng. Cột này cầu về hạnh phúc gia đình hay những người sinh con một bề muộn màng tình duyên ta cầu cột số 4. Tiếp tục cuộc hành trình phía trước của ngôi đền chính là 54ha rừng nguyên sinh, mà tương lai Tràng An sẽ mở tour du lịch đi dưới những tán cây si hàng ngàn năm tuổi.Từ đây cũng lên tới động người xưa là nơi cư trú của người tiền sử đã từng sống và lưu trú tại đây hơn 30.000 năm cách ngày nay, đặc biệt hơn trong thung lũng này còn là nơi cư trú của loài Phượng Hoàng đất hiện đang  sinh sống thành bầy đàn tại đây. 
+			'))" />
+
+	</scene>
+	
+	<scene name="scene_l7dentran2" title="Đền Trần " onstart="" thumburl="panos/l7dentran2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-69.741" vlookat="-6.275" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l7dentran2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l7dentran2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle"  ath="108.034" atv="3.533"  distorted="false" zoom="false" linkedscene="scene_l6hangnauruou_dentran1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="-84.889" atv="-1.231" distorted="false" zoom="false" linkedscene="scene_l7dentran4" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-66.707" atv="-7.732" distorted="false" zoom="false" onhover="Thông tin Đền Trần" onclick="js(showform('Đền Trần ','Có tên gọi là đền Trần nhưng không thờ vua hay tướng nhà Trần mà thờ một vị tướng có từ thời Hùng Vương thứ 18, có tước hiệu là Thánh Quý Minh Đại Vương. Vào thời Hùng Vương ông là một bậc trung hưng tướng, nhưng khi được giao cai quản trời Nam thì được phong tước là Thượng Đẳng Thần. Để tìm hiểu rõ hơn về ngôi đền xin ngược dòng thời gian trở về thế kỷ X, khi Đinh Bộ Lĩnh thống nhất đất nước lên ngôi hoàng đế đặt tên nước là Đại Cồ Việt, lấy niên hiệu là Thái Bình, chọn Hoa Lư làm kinh đô, cho xây dựng 4 ngôi đền theo 4 hướng Đông- Tây- Nam- Bắc và mượn uy danh của đức thánh ngài trấn trạch cho kinh đô Hoa Lư. Đây là ngôi đền tứ trấn phía Nam của nhà Đinh. Đến năm 1258 sau lần dẹp loạn quân Nguyên - Mông lần thứ nhất vua Trần Thái Tông vị vua đầu tiên của nhà Trần (tức Trần Cảnh) đã nhường ngôi lại cho con trai và lui về giữ cương vị Thái Thượng Hoàng. Lúc đó ông vừa tròn 40 tuổi đã dẫn theo một số quân quyền, phật tử về tu hành tại đây. Về tới đây ông thấy ngôi đền nhà Đinh được xây dựng bằng gỗ đã bị hư hại nên xin phép được chuyển ngôi đền từ gỗ sang thành ngôi đền đá sao y chính bản. Bên cạnh cho xây một ngôi chùa thờ Phật thờ  Mẫu. Qua thời gian ngôi chùa đã bị hư hại, nơi đây chỉ còn bệ thờ mẫu Huyền Thiên công chúa một trong tứ bất tử của Việt Nam. Quay ngược trở lại với kiến trúc của ngôi đền, theo thời gian ngôi đền được trùng tu nhưng vẫn giữ nguyên dáng vẻ của một ngôi đền cổ có niên đại hơn 762 năm. Từ sau lần trùng tu thứ nhất 1258 với 12 cột đá dầm xà ngưỡng ngạch và lợp mái hiên trên bằng đá, bên trong được cuốn vòm vật liệu chủ yếu là vôi, mật mía và giấy bạc. Trên mái xưa kia được lát bằng gạch thất cải chữ công. Cuối thế kỷ XIX đầu XX được trùng tu thêm một lớp vôi vữa xi măng  để ngôi đền có dáng vẻ như ngày hôm nay.Trên các cột đá người xưa đã tạc tất cả các nét hoa văn trên nền đá xanh nguyên khối lấy từ núi Nhồi - Thanh Hóa. Tạc lên đây bằng tâm, bằng đức ,bằng trí tuệ chứ không phải tiền bạc, cơ chế nên du khách có thể thấy tất cả các đường nét hoa văn rất mềm mại, sống động, tinh tế như muốn gửi gắm tâm tư, nguyện vọng của con người. 
+			Cột đá nơi đây được tạc theo tích tứ linh Long - Ly - Quy và Phượng. Long đại diện cho quyền lực, Ly đại diện cho sức mạnh sự may mắn cát tường, Quy thể hiện cho sự trường tồn vĩnh cửu và ở phía trên đỉnh các cột là thể hiện các cụ Phượng thể hiện cho sự thanh cao thoát tục. Người đời xưa đã gửi gắm vào đây với 4 điều tâm linh cầu may vào 4 cột đá ở hàng thứ nhất.
+			Cột 1 cụ Phượng với hai cánh dang rộng mỏ to mắt sáng nhìn chếch về phía dưới thể hiện cho thế thượng võ, miệng công theo dải lụa đào và cuốn thư thể hiện cho thế thượng văn, ở cột này văn võ song toàn cầu về công danh sự nghiệp.
+			Cột 2 ở đây cụ Phượng với tư thế bay cao, bay xa bay tít tầng mây trên lưng còn điểm lại áng mây hồng, mỏ cong mắt sáng miệng cũng công theo dải lụa và cuốn thư thể hiện cho lời ăn tiếng nói. Người xưa còn để lại nơi đây câu thơ: 
+			Mồng 5 cá đi ăn thề
+			Mồng 8 cá về cá vượt vũ môn
+			Thể hiện cho các bậc sỹ tử qua các kỳ thi vì thế mà cột này cầu về tài đức trí tuệ.
+				Cột 3 cụ Phượng không còn hoàn thiện ,hoàn mỹ nhưng cũng có thể thấy đầu đội trời chân đạp đất, hai cánh dang rộng, đôi chân nhỏ chắc khỏe. Ở đây tình nghĩa vua tôi kết thành một khối sức mạnh tập thể, vì thế cột này cầu về sức khỏe phù đổng.
+					Trên đây cuộc đời con người ta dù thành công tới mức độ phi phàm, đến đỉnh cao cuộc sống có công danh, địa vị tiền tài, sức khỏe nhưng cũng không thể thiếu được cột thứ 4 với ý nghĩa thâm thúy hơn. Một lần nữa người đời xưa đã thể chế hóa lại cụ Phượng với hai cánh đan chéo vào nhau giống hình trái tim, ở đây rồng  dáng hạ hút nước, khi dòng nước được cuốn lên ông rùa từ đầm sen ló ra ông cá rô cũng ngỡ mình được quy tiên nên cũng ngoi theo dòng nước đi lên. Cổ nhân có để lại nơi đây đôi câu thơ:
+			Dập dìu cánh hạc chơi vơi
+			Tiễn thuyền vua Lý đang dời kinh đô
+			Khi đi nhớ cậu cùng cô
+			Khi về lại nhớ cá rô Tổng Trường
+			Cá rô Tổng Trường ở đây cũng ngụ ý khoe đặc sản của quê hương một đặc sản dùng để tiến vua nhưng ngụ ý sâu xa phía sau, cá rô lại thể hiện cho người phụ nữ mỗi lần sinh nở là mỗi lần vượt cạn. Các đấng minh quân dù tài cao đức trọng, dù thành công đến mức độ phi phàm thì không thể thiếu nửa cuộc đời của mình, giúp cho các đứng minh quân có được thành công chính là người phụ nữ. Vì thế ở đây quần thể trời đất hòa thuận ôm ấp lấy trái tim lồng. Cột này cầu về hạnh phúc gia đình hay những người sinh con một bề muộn màng tình duyên ta cầu cột số 4. Tiếp tục cuộc hành trình phía trước của ngôi đền chính là 54ha rừng nguyên sinh, mà tương lai Tràng An sẽ mở tour du lịch đi dưới những tán cây si hàng ngàn năm tuổi.Từ đây cũng lên tới động người xưa là nơi cư trú của người tiền sử đã từng sống và lưu trú tại đây hơn 30.000 năm cách ngày nay, đặc biệt hơn trong thung lũng này còn là nơi cư trú của loài Phượng Hoàng đất hiện đang  sinh sống thành bầy đàn tại đây. 
+			'))" />
+
+	</scene>
+
+	<scene name="scene_l7dentran4" title="Đền Trần 02" onstart="" thumburl="panos/l7dentran4.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l7dentran4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l7dentran4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="55.716" atv="11.131" distorted="false" zoom="false" linkedscene="scene_l7dentran2" />
+		<hotspot name="spot2" style="skin_hotspotstyle_info" ath="25.980" atv="5.343" distorted="false" zoom="false" onhover="Thông tin Đền Trần" onclick="js(showform('Đền Trần ','Có tên gọi là đền Trần nhưng không thờ vua hay tướng nhà Trần mà thờ một vị tướng có từ thời Hùng Vương thứ 18, có tước hiệu là Thánh Quý Minh Đại Vương. Vào thời Hùng Vương ông là một bậc trung hưng tướng, nhưng khi được giao cai quản trời Nam thì được phong tước là Thượng Đẳng Thần. Để tìm hiểu rõ hơn về ngôi đền xin ngược dòng thời gian trở về thế kỷ X, khi Đinh Bộ Lĩnh thống nhất đất nước lên ngôi hoàng đế đặt tên nước là Đại Cồ Việt, lấy niên hiệu là Thái Bình, chọn Hoa Lư làm kinh đô, cho xây dựng 4 ngôi đền theo 4 hướng Đông- Tây- Nam- Bắc và mượn uy danh của đức thánh ngài trấn trạch cho kinh đô Hoa Lư. Đây là ngôi đền tứ trấn phía Nam của nhà Đinh. Đến năm 1258 sau lần dẹp loạn quân Nguyên - Mông lần thứ nhất vua Trần Thái Tông vị vua đầu tiên của nhà Trần (tức Trần Cảnh) đã nhường ngôi lại cho con trai và lui về giữ cương vị Thái Thượng Hoàng. Lúc đó ông vừa tròn 40 tuổi đã dẫn theo một số quân quyền, phật tử về tu hành tại đây. Về tới đây ông thấy ngôi đền nhà Đinh được xây dựng bằng gỗ đã bị hư hại nên xin phép được chuyển ngôi đền từ gỗ sang thành ngôi đền đá sao y chính bản. Bên cạnh cho xây một ngôi chùa thờ Phật thờ  Mẫu. Qua thời gian ngôi chùa đã bị hư hại, nơi đây chỉ còn bệ thờ mẫu Huyền Thiên công chúa một trong tứ bất tử của Việt Nam. Quay ngược trở lại với kiến trúc của ngôi đền, theo thời gian ngôi đền được trùng tu nhưng vẫn giữ nguyên dáng vẻ của một ngôi đền cổ có niên đại hơn 762 năm. Từ sau lần trùng tu thứ nhất 1258 với 12 cột đá dầm xà ngưỡng ngạch và lợp mái hiên trên bằng đá, bên trong được cuốn vòm vật liệu chủ yếu là vôi, mật mía và giấy bạc. Trên mái xưa kia được lát bằng gạch thất cải chữ công. Cuối thế kỷ XIX đầu XX được trùng tu thêm một lớp vôi vữa xi măng  để ngôi đền có dáng vẻ như ngày hôm nay.Trên các cột đá người xưa đã tạc tất cả các nét hoa văn trên nền đá xanh nguyên khối lấy từ núi Nhồi - Thanh Hóa. Tạc lên đây bằng tâm, bằng đức ,bằng trí tuệ chứ không phải tiền bạc, cơ chế nên du khách có thể thấy tất cả các đường nét hoa văn rất mềm mại, sống động, tinh tế như muốn gửi gắm tâm tư, nguyện vọng của con người. 
+			Cột đá nơi đây được tạc theo tích tứ linh Long - Ly - Quy và Phượng. Long đại diện cho quyền lực, Ly đại diện cho sức mạnh sự may mắn cát tường, Quy thể hiện cho sự trường tồn vĩnh cửu và ở phía trên đỉnh các cột là thể hiện các cụ Phượng thể hiện cho sự thanh cao thoát tục. Người đời xưa đã gửi gắm vào đây với 4 điều tâm linh cầu may vào 4 cột đá ở hàng thứ nhất.
+			Cột 1 cụ Phượng với hai cánh dang rộng mỏ to mắt sáng nhìn chếch về phía dưới thể hiện cho thế thượng võ, miệng công theo dải lụa đào và cuốn thư thể hiện cho thế thượng văn, ở cột này văn võ song toàn cầu về công danh sự nghiệp.
+			Cột 2 ở đây cụ Phượng với tư thế bay cao, bay xa bay tít tầng mây trên lưng còn điểm lại áng mây hồng, mỏ cong mắt sáng miệng cũng công theo dải lụa và cuốn thư thể hiện cho lời ăn tiếng nói. Người xưa còn để lại nơi đây câu thơ: 
+			Mồng 5 cá đi ăn thề
+			Mồng 8 cá về cá vượt vũ môn
+			Thể hiện cho các bậc sỹ tử qua các kỳ thi vì thế mà cột này cầu về tài đức trí tuệ.
+				Cột 3 cụ Phượng không còn hoàn thiện ,hoàn mỹ nhưng cũng có thể thấy đầu đội trời chân đạp đất, hai cánh dang rộng, đôi chân nhỏ chắc khỏe. Ở đây tình nghĩa vua tôi kết thành một khối sức mạnh tập thể, vì thế cột này cầu về sức khỏe phù đổng.
+					Trên đây cuộc đời con người ta dù thành công tới mức độ phi phàm, đến đỉnh cao cuộc sống có công danh, địa vị tiền tài, sức khỏe nhưng cũng không thể thiếu được cột thứ 4 với ý nghĩa thâm thúy hơn. Một lần nữa người đời xưa đã thể chế hóa lại cụ Phượng với hai cánh đan chéo vào nhau giống hình trái tim, ở đây rồng  dáng hạ hút nước, khi dòng nước được cuốn lên ông rùa từ đầm sen ló ra ông cá rô cũng ngỡ mình được quy tiên nên cũng ngoi theo dòng nước đi lên. Cổ nhân có để lại nơi đây đôi câu thơ:
+			Dập dìu cánh hạc chơi vơi
+			Tiễn thuyền vua Lý đang dời kinh đô
+			Khi đi nhớ cậu cùng cô
+			Khi về lại nhớ cá rô Tổng Trường
+			Cá rô Tổng Trường ở đây cũng ngụ ý khoe đặc sản của quê hương một đặc sản dùng để tiến vua nhưng ngụ ý sâu xa phía sau, cá rô lại thể hiện cho người phụ nữ mỗi lần sinh nở là mỗi lần vượt cạn. Các đấng minh quân dù tài cao đức trọng, dù thành công đến mức độ phi phàm thì không thể thiếu nửa cuộc đời của mình, giúp cho các đứng minh quân có được thành công chính là người phụ nữ. Vì thế ở đây quần thể trời đất hòa thuận ôm ấp lấy trái tim lồng. Cột này cầu về hạnh phúc gia đình hay những người sinh con một bề muộn màng tình duyên ta cầu cột số 4. Tiếp tục cuộc hành trình phía trước của ngôi đền chính là 54ha rừng nguyên sinh, mà tương lai Tràng An sẽ mở tour du lịch đi dưới những tán cây si hàng ngàn năm tuổi.Từ đây cũng lên tới động người xưa là nơi cư trú của người tiền sử đã từng sống và lưu trú tại đây hơn 30.000 năm cách ngày nay, đặc biệt hơn trong thung lũng này còn là nơi cư trú của loài Phượng Hoàng đất hiện đang  sinh sống thành bầy đàn tại đây. 
+			'))" />
+
+	</scene>
+
+	
+	<scene name="scene_l8hangdot_cuahang1" title=" Hang Đột" onstart="" thumburl="panos/l8hangdot_cuahang1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="21.960" vlookat="-2.091" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l8hangdot_cuahang1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l8hangdot_cuahang1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-4.011" atv="7.124" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang2" />
+		<hotspot name="spot2" style="hs_flycam" ath="48.928" atv="-47.987" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-91.420" atv="-8.691" distorted="false" zoom="false" linkedscene="scene_l2dentrinh_denco" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="81.240" atv="-5.907" distorted="false" zoom="false" linkedscene="scene_f3congtamquan" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="-148.577" atv="-0.767" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot6" style="hs_flycam" ath="-166.621" atv="-29.366" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot7" style="skin_hotspotstyle_info" ath="-37.02" atv="-7.421" distorted="false" zoom="false" onhover="Thông tin Hang Đột" onclick="js(showform('Hang Đột ','
+			Đây là hang động dài nhất ở Tràng An nói riêng và cả những khu du lịch sinh thái khác cùng loại trong tỉnh nói chung. Hang Đột dài 1.000m với các nhũ đá đủ hình thù lung linh, huyền ảo. Ngay giữa hang có một trần cao, phẳng và thoáng mát. Người lái đò sẽ mất khoảng 30 phút để chèo thuyền di chuyển qua hang nên bạn có thể thỏa thích ngắm nhìn khung cảnh tại đây.'))" />
+
+	</scene>
+
+	<scene name="scene_l8hangdot_cuahang2" title="Lối vào Hang Đột" onstart="" thumburl="panos/l8hangdot_cuahang2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l8hangdot_cuahang2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l8hangdot_cuahang2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-4.725" atv="8.931" distorted="false" zoom="false" linkedscene="scene_l8hangdot1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-143.191" atv="11.623" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang1" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-139.578" atv="-10.173" distorted="false" zoom="false" linkedscene="scene_f2dentrinh1_equi" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="-37.02" atv="-7.421" distorted="false" zoom="false" onhover="Thông tin Hang Đột" onclick="js(showform('Hang Đột ','
+			Đây là hang động dài nhất ở Tràng An nói riêng và cả những khu du lịch sinh thái khác cùng loại trong tỉnh nói chung. Hang Đột dài 1.000m với các nhũ đá đủ hình thù lung linh, huyền ảo. Ngay giữa hang có một trần cao, phẳng và thoáng mát. Người lái đò sẽ mất khoảng 30 phút để chèo thuyền di chuyển qua hang nên bạn có thể thỏa thích ngắm nhìn khung cảnh tại đây.'))" />
+
+	</scene>
+	<scene name="scene_l8hangdot1" title="Hang Đột 01" onstart="" thumburl="panos/l8hangdot1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l8hangdot1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l8hangdot1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-144.703" atv="9.637" distorted="false" zoom="false" linkedscene="scene_l8hangdot_cuahang2" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="6.386" atv="-1.747" distorted="false" zoom="false" linkedscene="scene_f9denducthanhcaoson" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="-32.577" atv="-5.464" distorted="false" zoom="false" onhover="Thông tin Hang Đột" onclick="js(showform('Hang Đột ','
+			Đây là hang động dài nhất ở Tràng An nói riêng và cả những khu du lịch sinh thái khác cùng loại trong tỉnh nói chung. Hang Đột dài 1.000m với các nhũ đá đủ hình thù lung linh, huyền ảo. Ngay giữa hang có một trần cao, phẳng và thoáng mát. Người lái đò sẽ mất khoảng 30 phút để chèo thuyền di chuyển qua hang nên bạn có thể thỏa thích ngắm nhìn khung cảnh tại đây.'))" />
+
+	</scene>
+
+
+	<scene name="scene_f9denducthanhcaoson" title="Đền Thánh Cao Sơn" onstart="" thumburl="panos/f9denducthanhcaoson.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="723.550" vlookat="-3.042" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f9denducthanhcaoson.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f9denducthanhcaoson.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-95.35" atv="3.971" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_prev" ath="127.925" atv="7.139" distorted="false" zoom="false" linkedscene="scene_l8hangdot1" />
+		<hotspot name="spot3" style="hs_flycam" ath="-157.245" atv="-54.703" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="-2.077" atv="21.276" distorted="false" zoom="false" onhover="Thông tin Đền Thánh Cao Sơn" onclick="js(showform('Đền Thánh Cao Sơn','Đền thờ Thánh Cao Sơn – theo dân gian truyền lại ông là 1 trong 100 người con của Lạc Long Quân cùng  Âu Cơ, ông là người có công trong việc giúp vua Hùng đánh đuổi giặc Thục, phát triển nông nghiệp, giúp người dân có cuộc sống ấm no, hạnh phúc. Đặc biệt ông đã tìm ra 1 loại cây thân có bột để làm bánh thay cho bột gạo, ông đã lấy tên mình đặt cho cây đó gọi là cây Quang Lang. Ngôi đền thờ Thánh Cao Sơn được trùng tu vào năm 2017, được xây dựng bằng vật liệu hoàn toàn bằng gỗ( 4 loại gỗ tứ thiết đinh, lim, sến ,táu) với kiến trúc 3 tầng mái 8 mái. Ngôi đền xây dựng theo địa thế “ỷ sơn diện thủy” có nghĩa là tựa lưng vào núi mặt hướng ra sông, tạo cảm giác được bao bọc và an toàn. Theo các nhà phong thủy, đây là thế đất mang lại phú quý tài lộc. Ngay bên phải gần đền thờ Thánh Cao Sơn còn ngôi đền cổ tọa lạc dưới tòa si.'))" />
+
+	</scene>
+	<scene name="scene_f10densuoitien1" title="Đền Suối Tiên" onstart="" thumburl="panos/f10densuoitien1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-10.160" vlookat="-1.329" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f10densuoitien1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f10densuoitien1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-6.766" atv="28.213" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_trencau" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="123.425" atv="8.952" distorted="false" zoom="false" linkedscene="scene_f9denducthanhcaoson" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-179.821" atv="6.676" distorted="false" zoom="false" linkedscene="scene_f11nuidialinh" />
+		<hotspot name="spot4" style="hs_flycam"  ath="-92.531" atv="-30.371"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+	<scene name="scene_l10densuoitien_trencau" title="Trên cầu lối vào Đền Suối Tiên" onstart="" thumburl="panos/l10densuoitien_trencau.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l10densuoitien_trencau.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l10densuoitien_trencau.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="0.308" atv="10.773" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_cau" />
+		<hotspot name="spot2" style="hs_flycam" ath="175.163" atv="-48.521" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="0.627" atv="15.310" distorted="false" zoom="false" onhover="Thông tin Đền Suối Tiên" onclick="js(showform('Đền Suối Tiên','Phía trước đền có bức bình phong, hay còn gọi với tên là cuốn thư  làm bằng đá xanh nguyên khối là vật che chắn phong thủy, dùng để ngăn chặn tà khí từ các hướng xấu, từ các vật lạ đặt phía trước chiếu vào. với ý nghĩa tâm linh tránh các thế lực xấu xa, xua đuổi các luồng khí không tốt.
+		Ở giữa sân đền có hình tượng rùa cõng hạc thường uy nghi, đứng hai bên như một vật biểu linh cho tính thiêng của thần linh và sức mạnh của dân tộc. Rùa theo tiếng hán gọi là Quy đây là loài hòa hợp cả âm lẫn dương, được coi là bản sao của vũ trụ. Bụng bằng phẳng tượng trưng cho đất (âm ), mai cong tượng trưng cho trời (dương), bốn chân rùa là bốn cực của thế giới( Đông, Tây, Nam , Bắc). Ngoài ra rùa còn mang ý nghĩa trị thủy, gắn bó với sản xuất nông nghiệp, đặc biệt là nghi lễ cầu mưa. Có thể nói hình ảnh rùa trong các điểm tâm linh mang đậm tính linh thiêng biểu trưng cho sự trường tồn vững trãi. Hạc được xem như loài chim quý, hình ảnh hạc thường xuất hiện bên các vị thần tiên. Hạc trong tạo hình thường đứng trên lưng rùa. Hạc cũng là loài tượng 
+		trưng cho sự trường thọ. Bởi vậy sự kết hợp giữa 2 vật linh đã tạo nên biểu tượng “ Thọ đội Thọ”. Hạc biểu hiện cho tầng trên còn Rùa đại diện cho tầng dưới để hợp thành một thể âm dương đối đãi. 
+		Đền Suối Tiên thờ Thánh Quý Minh Đại Vương và phu nhân của Ông. Ông là một vị tướng tài ba thời Hùng Vương thứ 18. Theo truyền thuyết dân gian, Đức thánh Quý Minh Đại Vương là một trong ba anh em - ba vị tướng đã được phong Thánh (Đức thánh Tản Viên, Đức thánh Cao Sơn và Đức thánh Quý Minh) là người có công trấn ải Sơn Nam, bảo vệ đất nước. Ngôi đền cổ thờ Ngài là đền Trần nằm ở tuyến 1 Tràng An, để tiện cho việc đi lại và thờ cúng nên người dân đã xin rước chân nhang đức Ngài sang bên này để xây dựng đền và thờ cúng. Đến năm 2003 một doanh nghiệp trẻ của Ninh Bình đó là doanh nghiệp Xuân Trường ông đã cùng phu nhân của mình phát tâm trùng tu tất cả các điểm tâm linh trong toàn bộ quần thể Tràng An, cũng như cho nạo vét 48 hang động 31 thung lũng .Lịch sử tưởng như đã ngủ yên hơn1000 năm trở thành di sản văn hóa và thiên nhiên thế giới như ngày hôm nay.
+		Đền Suối Tiên được xây dựng lại trên nền móng cũ bằng 4 loại gỗ tứ thiết:  đinh, lim, sến, táu. Kiến trúc ngôi đền được xây dựng thiết kế với 2 tầng và 8 mái với các cây cột gỗ lớn hơn đền Trần.
+		Hàng năm, vào ngày 17-18/03 âm lịch, lễ hội truyền thống Tràng An (Thánh Quý Minh Đại Vương) được tổ chức tại đền Trần (đền Nội Lâm), đền Suối Tiên. Lễ hội tổ chức nhằm tưởng nhớ và tri ân công đức của Đức Thánh Quý Minh Đại Vương đồng thời cũng là dịp để cầu nguyện cho quốc thái dân an, mưa thuận gió hòa.'))"/>
+		<hotspot name="spot4" style="hs_flycam"  ath="-74.56" atv="-50.076"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		
+
+	</scene>
+
+
+	<scene name="scene_l10densuoitien_cau" title="Bên ngoài Đền Suối Tiên" onstart="" thumburl="panos/l10densuoitien_cau.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l10densuoitien_cau.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l10densuoitien_cau.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="21.787" atv="10.466" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_cong" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev"  ath="-179.771" atv="5.536" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_trencau" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-15.595" atv="11.539" distorted="false" zoom="false"  onhover="Thông tin Đền Suối Tiên" onclick="js(showform('Đền Suối Tiên','Phía trước đền có bức bình phong, hay còn gọi với tên là cuốn thư  làm bằng đá xanh nguyên khối là vật che chắn phong thủy, dùng để ngăn chặn tà khí từ các hướng xấu, từ các vật lạ đặt phía trước chiếu vào. với ý nghĩa tâm linh tránh các thế lực xấu xa, xua đuổi các luồng khí không tốt.
+		Ở giữa sân đền có hình tượng rùa cõng hạc thường uy nghi, đứng hai bên như một vật biểu linh cho tính thiêng của thần linh và sức mạnh của dân tộc. Rùa theo tiếng hán gọi là Quy đây là loài hòa hợp cả âm lẫn dương, được coi là bản sao của vũ trụ. Bụng bằng phẳng tượng trưng cho đất (âm ), mai cong tượng trưng cho trời (dương), bốn chân rùa là bốn cực của thế giới( Đông, Tây, Nam , Bắc). Ngoài ra rùa còn mang ý nghĩa trị thủy, gắn bó với sản xuất nông nghiệp, đặc biệt là nghi lễ cầu mưa. Có thể nói hình ảnh rùa trong các điểm tâm linh mang đậm tính linh thiêng biểu trưng cho sự trường tồn vững trãi. Hạc được xem như loài chim quý, hình ảnh hạc thường xuất hiện bên các vị thần tiên. Hạc trong tạo hình thường đứng trên lưng rùa. Hạc cũng là loài tượng 
+		trưng cho sự trường thọ. Bởi vậy sự kết hợp giữa 2 vật linh đã tạo nên biểu tượng “ Thọ đội Thọ”. Hạc biểu hiện cho tầng trên còn Rùa đại diện cho tầng dưới để hợp thành một thể âm dương đối đãi. 
+		Đền Suối Tiên thờ Thánh Quý Minh Đại Vương và phu nhân của Ông. Ông là một vị tướng tài ba thời Hùng Vương thứ 18. Theo truyền thuyết dân gian, Đức thánh Quý Minh Đại Vương là một trong ba anh em - ba vị tướng đã được phong Thánh (Đức thánh Tản Viên, Đức thánh Cao Sơn và Đức thánh Quý Minh) là người có công trấn ải Sơn Nam, bảo vệ đất nước. Ngôi đền cổ thờ Ngài là đền Trần nằm ở tuyến 1 Tràng An, để tiện cho việc đi lại và thờ cúng nên người dân đã xin rước chân nhang đức Ngài sang bên này để xây dựng đền và thờ cúng. Đến năm 2003 một doanh nghiệp trẻ của Ninh Bình đó là doanh nghiệp Xuân Trường ông đã cùng phu nhân của mình phát tâm trùng tu tất cả các điểm tâm linh trong toàn bộ quần thể Tràng An, cũng như cho nạo vét 48 hang động 31 thung lũng .Lịch sử tưởng như đã ngủ yên hơn1000 năm trở thành di sản văn hóa và thiên nhiên thế giới như ngày hôm nay.
+		Đền Suối Tiên được xây dựng lại trên nền móng cũ bằng 4 loại gỗ tứ thiết:  đinh, lim, sến, táu. Kiến trúc ngôi đền được xây dựng thiết kế với 2 tầng và 8 mái với các cây cột gỗ lớn hơn đền Trần.
+		Hàng năm, vào ngày 17-18/03 âm lịch, lễ hội truyền thống Tràng An (Thánh Quý Minh Đại Vương) được tổ chức tại đền Trần (đền Nội Lâm), đền Suối Tiên. Lễ hội tổ chức nhằm tưởng nhớ và tri ân công đức của Đức Thánh Quý Minh Đại Vương đồng thời cũng là dịp để cầu nguyện cho quốc thái dân an, mưa thuận gió hòa.'))"/>
+		<hotspot name="spot4" style="hs_flycam" ath="-179.416" atv="-36.743" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+
+	</scene>
+
+	<scene name="scene_l10densuoitien_cong" title="Cổng Vào Đền Suối Tiên" onstart="" thumburl="panos/l10densuoitien_cong.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l10densuoitien_cong.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l10densuoitien_cong.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move"  ath="-1.870" atv="7.586" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_san" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev"  ath="-169.116" atv="5.470" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_cau" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="7.874" atv="1.261" distorted="false" zoom="false"  onhover="Thông tin Đền Suối Tiên" onclick="js(showform('Đền Suối Tiên','Phía trước đền có bức bình phong, hay còn gọi với tên là cuốn thư  làm bằng đá xanh nguyên khối là vật che chắn phong thủy, dùng để ngăn chặn tà khí từ các hướng xấu, từ các vật lạ đặt phía trước chiếu vào. với ý nghĩa tâm linh tránh các thế lực xấu xa, xua đuổi các luồng khí không tốt.
+		Ở giữa sân đền có hình tượng rùa cõng hạc thường uy nghi, đứng hai bên như một vật biểu linh cho tính thiêng của thần linh và sức mạnh của dân tộc. Rùa theo tiếng hán gọi là Quy đây là loài hòa hợp cả âm lẫn dương, được coi là bản sao của vũ trụ. Bụng bằng phẳng tượng trưng cho đất (âm ), mai cong tượng trưng cho trời (dương), bốn chân rùa là bốn cực của thế giới( Đông, Tây, Nam , Bắc). Ngoài ra rùa còn mang ý nghĩa trị thủy, gắn bó với sản xuất nông nghiệp, đặc biệt là nghi lễ cầu mưa. Có thể nói hình ảnh rùa trong các điểm tâm linh mang đậm tính linh thiêng biểu trưng cho sự trường tồn vững trãi. Hạc được xem như loài chim quý, hình ảnh hạc thường xuất hiện bên các vị thần tiên. Hạc trong tạo hình thường đứng trên lưng rùa. Hạc cũng là loài tượng 
+		trưng cho sự trường thọ. Bởi vậy sự kết hợp giữa 2 vật linh đã tạo nên biểu tượng “ Thọ đội Thọ”. Hạc biểu hiện cho tầng trên còn Rùa đại diện cho tầng dưới để hợp thành một thể âm dương đối đãi. 
+		Đền Suối Tiên thờ Thánh Quý Minh Đại Vương và phu nhân của Ông. Ông là một vị tướng tài ba thời Hùng Vương thứ 18. Theo truyền thuyết dân gian, Đức thánh Quý Minh Đại Vương là một trong ba anh em - ba vị tướng đã được phong Thánh (Đức thánh Tản Viên, Đức thánh Cao Sơn và Đức thánh Quý Minh) là người có công trấn ải Sơn Nam, bảo vệ đất nước. Ngôi đền cổ thờ Ngài là đền Trần nằm ở tuyến 1 Tràng An, để tiện cho việc đi lại và thờ cúng nên người dân đã xin rước chân nhang đức Ngài sang bên này để xây dựng đền và thờ cúng. Đến năm 2003 một doanh nghiệp trẻ của Ninh Bình đó là doanh nghiệp Xuân Trường ông đã cùng phu nhân của mình phát tâm trùng tu tất cả các điểm tâm linh trong toàn bộ quần thể Tràng An, cũng như cho nạo vét 48 hang động 31 thung lũng .Lịch sử tưởng như đã ngủ yên hơn1000 năm trở thành di sản văn hóa và thiên nhiên thế giới như ngày hôm nay.
+		Đền Suối Tiên được xây dựng lại trên nền móng cũ bằng 4 loại gỗ tứ thiết:  đinh, lim, sến, táu. Kiến trúc ngôi đền được xây dựng thiết kế với 2 tầng và 8 mái với các cây cột gỗ lớn hơn đền Trần.
+		Hàng năm, vào ngày 17-18/03 âm lịch, lễ hội truyền thống Tràng An (Thánh Quý Minh Đại Vương) được tổ chức tại đền Trần (đền Nội Lâm), đền Suối Tiên. Lễ hội tổ chức nhằm tưởng nhớ và tri ân công đức của Đức Thánh Quý Minh Đại Vương đồng thời cũng là dịp để cầu nguyện cho quốc thái dân an, mưa thuận gió hòa.'))"/>
+		<hotspot name="spot4" style="hs_flycam" ath="177.892" atv="-37.635" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+
+	</scene>
+
+	<scene name="scene_l10densuoitien_san" title="Sân Đền Suối Tiên" onstart="" thumburl="panos/l10densuoitien_san.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l10densuoitien_san.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l10densuoitien_san.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-179.603" atv="5.813" distorted="false" zoom="false" linkedscene="scene_l10densuoitien_cong" />
+		<hotspot name="spot2" style="hs_flycam" ath="177.154" atv="-40.290" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="1.46" atv="4.814" distorted="false" zoom="false" onhover="Thông tin Đền Suối Tiên" onclick="js(showform('Đền Suối Tiên','Phía trước đền có bức bình phong, hay còn gọi với tên là cuốn thư  làm bằng đá xanh nguyên khối là vật che chắn phong thủy, dùng để ngăn chặn tà khí từ các hướng xấu, từ các vật lạ đặt phía trước chiếu vào. với ý nghĩa tâm linh tránh các thế lực xấu xa, xua đuổi các luồng khí không tốt.
+		Ở giữa sân đền có hình tượng rùa cõng hạc thường uy nghi, đứng hai bên như một vật biểu linh cho tính thiêng của thần linh và sức mạnh của dân tộc. Rùa theo tiếng hán gọi là Quy đây là loài hòa hợp cả âm lẫn dương, được coi là bản sao của vũ trụ. Bụng bằng phẳng tượng trưng cho đất (âm ), mai cong tượng trưng cho trời (dương), bốn chân rùa là bốn cực của thế giới( Đông, Tây, Nam , Bắc). Ngoài ra rùa còn mang ý nghĩa trị thủy, gắn bó với sản xuất nông nghiệp, đặc biệt là nghi lễ cầu mưa. Có thể nói hình ảnh rùa trong các điểm tâm linh mang đậm tính linh thiêng biểu trưng cho sự trường tồn vững trãi. Hạc được xem như loài chim quý, hình ảnh hạc thường xuất hiện bên các vị thần tiên. Hạc trong tạo hình thường đứng trên lưng rùa. Hạc cũng là loài tượng 
+		trưng cho sự trường thọ. Bởi vậy sự kết hợp giữa 2 vật linh đã tạo nên biểu tượng “ Thọ đội Thọ”. Hạc biểu hiện cho tầng trên còn Rùa đại diện cho tầng dưới để hợp thành một thể âm dương đối đãi. 
+		Đền Suối Tiên thờ Thánh Quý Minh Đại Vương và phu nhân của Ông. Ông là một vị tướng tài ba thời Hùng Vương thứ 18. Theo truyền thuyết dân gian, Đức thánh Quý Minh Đại Vương là một trong ba anh em - ba vị tướng đã được phong Thánh (Đức thánh Tản Viên, Đức thánh Cao Sơn và Đức thánh Quý Minh) là người có công trấn ải Sơn Nam, bảo vệ đất nước. Ngôi đền cổ thờ Ngài là đền Trần nằm ở tuyến 1 Tràng An, để tiện cho việc đi lại và thờ cúng nên người dân đã xin rước chân nhang đức Ngài sang bên này để xây dựng đền và thờ cúng. Đến năm 2003 một doanh nghiệp trẻ của Ninh Bình đó là doanh nghiệp Xuân Trường ông đã cùng phu nhân của mình phát tâm trùng tu tất cả các điểm tâm linh trong toàn bộ quần thể Tràng An, cũng như cho nạo vét 48 hang động 31 thung lũng .Lịch sử tưởng như đã ngủ yên hơn1000 năm trở thành di sản văn hóa và thiên nhiên thế giới như ngày hôm nay.
+		Đền Suối Tiên được xây dựng lại trên nền móng cũ bằng 4 loại gỗ tứ thiết:  đinh, lim, sến, táu. Kiến trúc ngôi đền được xây dựng thiết kế với 2 tầng và 8 mái với các cây cột gỗ lớn hơn đền Trần.
+		Hàng năm, vào ngày 17-18/03 âm lịch, lễ hội truyền thống Tràng An (Thánh Quý Minh Đại Vương) được tổ chức tại đền Trần (đền Nội Lâm), đền Suối Tiên. Lễ hội tổ chức nhằm tưởng nhớ và tri ân công đức của Đức Thánh Quý Minh Đại Vương đồng thời cũng là dịp để cầu nguyện cho quốc thái dân an, mưa thuận gió hòa.'))"/>
+
+	</scene>
+	<scene name="scene_f11nuidialinh" title="Núi Địa Linh" onstart="" thumburl="panos/f11nuidialinh.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="466.261" vlookat="-13.497" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f11nuidialinh.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f11nuidialinh.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="164.696" atv="-3.148" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_chinhdien1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="15.204" atv="-9.185" distorted="false" zoom="false" linkedscene="scene_f10densuoitien1" />
+		<!-- <hotspot name="spot3" style="skin_hotspotstyle_info" ath="89.543" atv="-18.696" distorted="false" zoom="false" onhover="Thông tin Núi Địa Linh" onclick="js(showform('Núi Địa Linh',''))"  /> -->
+		<hotspot name="spot4" style="hs_flycam" ath="43.222" atv="-34.209" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+	<scene name="scene_f12hanhcungvulam_chinhdien1" title="Hành Cung Vũ Lâm" onstart="" thumburl="panos/f12hanhcungvulam_chinhdien1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f12hanhcungvulam_chinhdien1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f12hanhcungvulam_chinhdien1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="31.213" atv="3.826" distorted="false" zoom="false" linkedscene="scene_f11nuidialinh" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-19.573" atv="0.612" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="1.270" atv="12.261" distorted="false" zoom="false" linkedscene="scene_hacungvulam_sandien1" />
+		<hotspot name="spot4" style="hs_flycam" ath="-47.297" atv="-35.977"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="13.998" atv="-17.481" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_phiasautrencao2" />
+		<hotspot name="spot6" style="hs_flycam" ath="1.287" atv="-20.988" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_phiasautrencao2" />
+		
+
+	</scene>
+	
+
+	<scene name="scene_hacungvulam_sandien1" title="Sân Điện trước Hành Cung Vũ Lâm" onstart="" thumburl="panos/hacungvulam_sandien1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/hacungvulam_sandien1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/hacungvulam_sandien1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="hs_flycam"  ath="-161.22" atv="-47.79" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_chinhdien1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="20.910" atv="1.780" distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam4" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move" ath="82.091" atv="4.717" distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam2" />
+		<hotspot name="spot4" style="skin_hotspotstyle_move" ath="-26.961" atv="1.402"  distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam4" />
+		<hotspot name="spot5" style="hs_flycam" ath="-97.719" atv="-46.687" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot6" style="skin_hotspotstyle_info" ath="11.546" atv="-0.369"  distorted="false" zoom="false" onhover="Thông tin Hành Cung Vũ Lâm" onclick="js(showform('Hành Cung Vũ Lâm','Hành Cung Vũ Lâm thuộc vùng núi phía Nam của Kinh đô Hoa Lư xưa, nằm trong vùng lõi Di sản Tràng An. Đây là nơi các Vua nhà Trần lập căn cứ địa để củng cố lực lượng, tích trữ lương thảo, rèn luyện binh khí và chờ cơ hội phản công, giải phóng Đại Việt trong cuộc kháng chiến chống giặc Nguyên Mông lần thứ 2, lần thứ 3. Điều đặc biệt của khu vực này chính bởi địa hình nơi đây bao gồm hệ thống núi đá vôi dày đặc và hệ thống hang động cùng các thung lũng, rừng cây rậm rạp, thuận tiện cho việc phòng thủ và tấn công của quân và dân ta. Sông nước có thể dễ dàng khóa chân vó ngựa quân Nguyên Mông vốn chỉ quen chinh chiến trên những vùng thảo nguyên rộng lớn, còn cung tên của chúng sẽ không thể bắn vào trong các hệ thống hang động được.
+			Cụm. Hành Cung Vũ Lâm bao gồm các ngôi đền thờ 6 vị vua Trần những người đã tham gia 3 cuộc kháng chiến chống Nguyên Mông, cũng là những người đã từng tu hanh tại đây .Đền thờ Hưng Đạo Vương Trần Quốc Tuấn, cùng với các môn khách của mình như Phạm Ngũ Lão, Yết Kiêu, danh nhân văn hóa Trương Hán Siêu. Chùa Khai Phúc ngôi chùa mà những vị vua Trần đã tu hành cầu cho quốc thái dân an thế giới chúng sinh hòa bình an lạc. Điện thờ Mẫu là nơi Tam Tòa Thánh Mẫu, đây là một trong những tín ngưỡng văn hóa dân gian gắn liền với nên văn hóa lúa nước sông Hông. Đặc  biệt tín ngưỡng thờ mẫu đã được hội đồng di sản unsco công nhận là di sản văn hóa thi vật thể của nhân loại vào tháng 12 năm 20016. Đền thờ các bậc tướng sỹ triều Đinh và Miếu cổ thờ Tả Thanh Trù Giám Sát đại tướng quân nhà Đinh đã được các triều đại sau phong là Thành Hoàng Làng của vùng đất này. Nơi đây còn một ngôi đền nhỏ thờ người có công lớn với việc phất triển Tràng An trở thành di san thế giới như ngày hôm nay. Đó là cố cư sỹ Phật Tử Diệu Liên thế danh Phạm Thị Lan, bà là người phụ nữ đặc biệt đã cống hiến hết mình cho quê hương cho di sản. Bà đã cùng chồng của mình là giám đốc doanh nghiệp Xuân Trường phát tâm xây dựng di sản xây chùa Bái đính, Chùa Tam Chúc và 9 ngôi chùa trên các đảo của Việt Nam như ở trường Sa lớn, song tử Tây, Trường Sinh, Nam Yết…'))" />
+		<hotspot name="spot7" style="hs_flycam"  ath="-3.527" atv="-50.311" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_phiasautrencao2" />
+
+	</scene>
+	<scene name="scene_l12hanhcungvulam4" title="Điện trước Hành Cung Vũ Lâm " onstart="" thumburl="panos/l12hanhcungvulam4.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.418" vlookat="-2.301" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l12hanhcungvulam4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l12hanhcungvulam4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="177.766" atv="32.702"  distorted="false" zoom="false" linkedscene="scene_hacungvulam_sandien1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_info" ath="20.402" atv="9.7" distorted="false" zoom="false" onhover="Thông tin Hành Cung Vũ Lâm" onclick="js(showform('Hành Cung Vũ Lâm','Hành Cung Vũ Lâm thuộc vùng núi phía Nam của Kinh đô Hoa Lư xưa, nằm trong vùng lõi Di sản Tràng An. Đây là nơi các Vua nhà Trần lập căn cứ địa để củng cố lực lượng, tích trữ lương thảo, rèn luyện binh khí và chờ cơ hội phản công, giải phóng Đại Việt trong cuộc kháng chiến chống giặc Nguyên Mông lần thứ 2, lần thứ 3. Điều đặc biệt của khu vực này chính bởi địa hình nơi đây bao gồm hệ thống núi đá vôi dày đặc và hệ thống hang động cùng các thung lũng, rừng cây rậm rạp, thuận tiện cho việc phòng thủ và tấn công của quân và dân ta. Sông nước có thể dễ dàng khóa chân vó ngựa quân Nguyên Mông vốn chỉ quen chinh chiến trên những vùng thảo nguyên rộng lớn, còn cung tên của chúng sẽ không thể bắn vào trong các hệ thống hang động được.
+			Cụm. Hành Cung Vũ Lâm bao gồm các ngôi đền thờ 6 vị vua Trần những người đã tham gia 3 cuộc kháng chiến chống Nguyên Mông, cũng là những người đã từng tu hanh tại đây .Đền thờ Hưng Đạo Vương Trần Quốc Tuấn, cùng với các môn khách của mình như Phạm Ngũ Lão, Yết Kiêu, danh nhân văn hóa Trương Hán Siêu. Chùa Khai Phúc ngôi chùa mà những vị vua Trần đã tu hành cầu cho quốc thái dân an thế giới chúng sinh hòa bình an lạc. Điện thờ Mẫu là nơi Tam Tòa Thánh Mẫu, đây là một trong những tín ngưỡng văn hóa dân gian gắn liền với nên văn hóa lúa nước sông Hông. Đặc  biệt tín ngưỡng thờ mẫu đã được hội đồng di sản unsco công nhận là di sản văn hóa thi vật thể của nhân loại vào tháng 12 năm 20016. Đền thờ các bậc tướng sỹ triều Đinh và Miếu cổ thờ Tả Thanh Trù Giám Sát đại tướng quân nhà Đinh đã được các triều đại sau phong là Thành Hoàng Làng của vùng đất này. Nơi đây còn một ngôi đền nhỏ thờ người có công lớn với việc phất triển Tràng An trở thành di san thế giới như ngày hôm nay. Đó là cố cư sỹ Phật Tử Diệu Liên thế danh Phạm Thị Lan, bà là người phụ nữ đặc biệt đã cống hiến hết mình cho quê hương cho di sản. Bà đã cùng chồng của mình là giám đốc doanh nghiệp Xuân Trường phát tâm xây dựng di sản xây chùa Bái đính, Chùa Tam Chúc và 9 ngôi chùa trên các đảo của Việt Nam như ở trường Sa lớn, song tử Tây, Trường Sinh, Nam Yết…'))" />
+		
+		
+
+	</scene>
+	<scene name="scene_l12hanhcungvulam2" title="Sân Điện sau Hành Cung Vũ Lâm " onstart="" thumburl="panos/l12hanhcungvulam2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l12hanhcungvulam2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l12hanhcungvulam2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="34.229" atv="6.600" distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="123.969" atv="7.928" distorted="false" zoom="false" linkedscene="scene_hacungvulam_sandien1" />
+		<hotspot name="spot3" style="hs_flycam" ath="-176.296" atv="-31.167" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_chinhdien1" />
+		<hotspot name="spot4" style="skin_hotspotstyle_move" ath="-33.769" atv="6.641" distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam1" />
+		<hotspot name="spot5" style="skin_hotspotstyle_info" ath="20.971" atv="13.789" distorted="false" zoom="false" onhover="Thông tin Hành Cung Vũ Lâm" onclick="js(showform('Hành Cung Vũ Lâm','Hành Cung Vũ Lâm thuộc vùng núi phía Nam của Kinh đô Hoa Lư xưa, nằm trong vùng lõi Di sản Tràng An. Đây là nơi các Vua nhà Trần lập căn cứ địa để củng cố lực lượng, tích trữ lương thảo, rèn luyện binh khí và chờ cơ hội phản công, giải phóng Đại Việt trong cuộc kháng chiến chống giặc Nguyên Mông lần thứ 2, lần thứ 3. Điều đặc biệt của khu vực này chính bởi địa hình nơi đây bao gồm hệ thống núi đá vôi dày đặc và hệ thống hang động cùng các thung lũng, rừng cây rậm rạp, thuận tiện cho việc phòng thủ và tấn công của quân và dân ta. Sông nước có thể dễ dàng khóa chân vó ngựa quân Nguyên Mông vốn chỉ quen chinh chiến trên những vùng thảo nguyên rộng lớn, còn cung tên của chúng sẽ không thể bắn vào trong các hệ thống hang động được.
+			Cụm. Hành Cung Vũ Lâm bao gồm các ngôi đền thờ 6 vị vua Trần những người đã tham gia 3 cuộc kháng chiến chống Nguyên Mông, cũng là những người đã từng tu hanh tại đây .Đền thờ Hưng Đạo Vương Trần Quốc Tuấn, cùng với các môn khách của mình như Phạm Ngũ Lão, Yết Kiêu, danh nhân văn hóa Trương Hán Siêu. Chùa Khai Phúc ngôi chùa mà những vị vua Trần đã tu hành cầu cho quốc thái dân an thế giới chúng sinh hòa bình an lạc. Điện thờ Mẫu là nơi Tam Tòa Thánh Mẫu, đây là một trong những tín ngưỡng văn hóa dân gian gắn liền với nên văn hóa lúa nước sông Hông. Đặc  biệt tín ngưỡng thờ mẫu đã được hội đồng di sản unsco công nhận là di sản văn hóa thi vật thể của nhân loại vào tháng 12 năm 20016. Đền thờ các bậc tướng sỹ triều Đinh và Miếu cổ thờ Tả Thanh Trù Giám Sát đại tướng quân nhà Đinh đã được các triều đại sau phong là Thành Hoàng Làng của vùng đất này. Nơi đây còn một ngôi đền nhỏ thờ người có công lớn với việc phất triển Tràng An trở thành di san thế giới như ngày hôm nay. Đó là cố cư sỹ Phật Tử Diệu Liên thế danh Phạm Thị Lan, bà là người phụ nữ đặc biệt đã cống hiến hết mình cho quê hương cho di sản. Bà đã cùng chồng của mình là giám đốc doanh nghiệp Xuân Trường phát tâm xây dựng di sản xây chùa Bái đính, Chùa Tam Chúc và 9 ngôi chùa trên các đảo của Việt Nam như ở trường Sa lớn, song tử Tây, Trường Sinh, Nam Yết…'))" />
+		<hotspot name="spot6" style="hs_flycam"  ath="-109.545" atv="-45.495" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot7" style="hs_flycam" ath="-1.507" atv="-60.432" distorted="false" zoom="false" linkedscene="scene_f12hanhcungvulam_phiasautrencao2" />
+		
+	</scene>
+	
+	<scene name="scene_l12hanhcungvulam1" title="Điện sau Hành Cung Vũ Lâm " onstart="" thumburl="panos/l12hanhcungvulam1.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/l12hanhcungvulam1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/l12hanhcungvulam1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="177.764" atv="17.807" distorted="false" zoom="false" linkedscene="scene_l12hanhcungvulam2" />
+		<hotspot name="spot2" style="skin_hotspotstyle_info" ath="22.867" atv="8.011" distorted="false" zoom="false" onhover="Thông tin Hành Cung Vũ Lâm" onclick="js(showform('Hành Cung Vũ Lâm','Hành Cung Vũ Lâm thuộc vùng núi phía Nam của Kinh đô Hoa Lư xưa, nằm trong vùng lõi Di sản Tràng An. Đây là nơi các Vua nhà Trần lập căn cứ địa để củng cố lực lượng, tích trữ lương thảo, rèn luyện binh khí và chờ cơ hội phản công, giải phóng Đại Việt trong cuộc kháng chiến chống giặc Nguyên Mông lần thứ 2, lần thứ 3. Điều đặc biệt của khu vực này chính bởi địa hình nơi đây bao gồm hệ thống núi đá vôi dày đặc và hệ thống hang động cùng các thung lũng, rừng cây rậm rạp, thuận tiện cho việc phòng thủ và tấn công của quân và dân ta. Sông nước có thể dễ dàng khóa chân vó ngựa quân Nguyên Mông vốn chỉ quen chinh chiến trên những vùng thảo nguyên rộng lớn, còn cung tên của chúng sẽ không thể bắn vào trong các hệ thống hang động được.
+			Cụm. Hành Cung Vũ Lâm bao gồm các ngôi đền thờ 6 vị vua Trần những người đã tham gia 3 cuộc kháng chiến chống Nguyên Mông, cũng là những người đã từng tu hanh tại đây .Đền thờ Hưng Đạo Vương Trần Quốc Tuấn, cùng với các môn khách của mình như Phạm Ngũ Lão, Yết Kiêu, danh nhân văn hóa Trương Hán Siêu. Chùa Khai Phúc ngôi chùa mà những vị vua Trần đã tu hành cầu cho quốc thái dân an thế giới chúng sinh hòa bình an lạc. Điện thờ Mẫu là nơi Tam Tòa Thánh Mẫu, đây là một trong những tín ngưỡng văn hóa dân gian gắn liền với nên văn hóa lúa nước sông Hông. Đặc  biệt tín ngưỡng thờ mẫu đã được hội đồng di sản unsco công nhận là di sản văn hóa thi vật thể của nhân loại vào tháng 12 năm 20016. Đền thờ các bậc tướng sỹ triều Đinh và Miếu cổ thờ Tả Thanh Trù Giám Sát đại tướng quân nhà Đinh đã được các triều đại sau phong là Thành Hoàng Làng của vùng đất này. Nơi đây còn một ngôi đền nhỏ thờ người có công lớn với việc phất triển Tràng An trở thành di san thế giới như ngày hôm nay. Đó là cố cư sỹ Phật Tử Diệu Liên thế danh Phạm Thị Lan, bà là người phụ nữ đặc biệt đã cống hiến hết mình cho quê hương cho di sản. Bà đã cùng chồng của mình là giám đốc doanh nghiệp Xuân Trường phát tâm xây dựng di sản xây chùa Bái đính, Chùa Tam Chúc và 9 ngôi chùa trên các đảo của Việt Nam như ở trường Sa lớn, song tử Tây, Trường Sinh, Nam Yết…'))" />
+		
+	</scene>
+
+	<scene name="scene_f12hanhcungvulam_phiasautrencao2" title="Phía sau Hành Cung Vũ Lâm" onstart="" thumburl="panos/f12hanhcungvulam_phiasautrencao2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/f12hanhcungvulam_phiasautrencao2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/f12hanhcungvulam_phiasautrencao2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="3.925" atv="26.903" distorted="false" zoom="false" linkedscene="scene_hacungvulam_sandien1" />
+		<hotspot name="spot2" style="hs_flycam" ath="79.682" atv="-16.531" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="32.137" atv="27.334" distorted="false" zoom="false" linkedscene="scene_f1benthuyen1" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="-17.632" atv="21.908" distorted="false" zoom="false" linkedscene="scene_f11nuidialinh" />
+		
+		<hotspot name="spot5" style="Iconcallout_bottom" ath="170.396" atv="47.195" distorted="false" zoom="false" content="Phim trường Kong" />
+		
+	</scene>
+
+
+
+
+	<scene name="scene_1_f0tongthe_tutamquangngoai_lenden" title="Toàn cảnh chùa Bái Đính" onstart="" thumburl="panos/1_f0tongthe_tutamquangngoai_lenden.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.610" vlookat="15.708" fovtype="MFOV" fov="107.065" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/1_f0tongthe_tutamquangngoai_lenden.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/1_f0tongthe_tutamquangngoai_lenden.tiles/pano_%s.jpg" />
+		</image>
+
+		<hotspot name="spot8" style="Iconcallout_point_straight_blue" ath="-5.8" atv="1.094"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot1" style="Iconcallout_pano_left"   ath="10.199" atv="-3.553"  distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot2" style="Iconcallout_pano_left" ath="-0.619" atv="17.58"  distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot3" style="Iconcallout_right" ath="-0.897" atv="9.008"  distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot4" style="Iconcallout_pano_left"  ath="-0.648" atv="6.917" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot5" style="Iconcallout_right" ath="-0.785" atv="3.573" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot6" style="Iconcallout_right" ath="-0.741" atv="0.775" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot7" style="Iconcallout_bottom" ath="5.712" atv="-0.343" distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+
+		<hotspot name="spot9" style="Iconcallout_point_straight_brown" ath="-71.463" atv="-1.653" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+		<hotspot name="spot10" style="Iconcallout_top" ath="71.56" atv="0.491"  distorted="false" zoom="false" content="Động Vân Trình" />
+
+
+	</scene>
+
+	<scene name="scene_2_f1congtamquannoi1" title="Tam Quan Nội" onstart="" thumburl="panos/2_f1congtamquannoi1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-1.046" vlookat="0.627" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_f1congtamquannoi1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_f1congtamquannoi1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-1.570" atv="16.213" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi2" />
+		<hotspot name="spot2" style="Iconcallout_bottom" ath="-1.046" atv="-4.172" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+	
+		<hotspot name="spot4" style="Iconcallout_bottom" ath="13.057" atv="-12.349" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot5" style="hs_flycam" ath="179.734" atv="-28.288" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+
+		<hotspot name="spot9" style="Iconcallout_point_straight_blue" ath="-7.895" atv="-5.632"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"    ath="-76.978" atv="-4.182" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+	</scene>
+	<scene name="scene_2_l1tamquan_noi2" title="Sân Tam Quan Nội" onstart="" thumburl="panos/2_l1tamquan_noi2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.837" vlookat="-12.967" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l1tamquan_noi2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l1tamquan_noi2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-0.294" atv="0.266" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi3" />
+		<hotspot name="spot2" style="hs_flycam" ath="179.941" atv="-34.381" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot3" style="hs_flycam" ath="1.622" atv="-46.768" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info" ath="-0.362" atv="3.336" distorted="false" zoom="false" onhover="Thông tin Tam Quan Nội" onclick="js(showform('Tam Quan Nội','Tam quan nội của Chùa Bái Đính có 3 tầng mái. Chúng được uốn cong ở 4 phía với 12 mái, sử dụng ngói nam của Bát Tràng với màu nâu sẫm để lợp. Toàn bộ góc của mái đều có phần đầu đao được xây cong nhìn giống với hình chim phượng hoàng vô cùng đẹp mắt, ấn tượng.
+		Phần nóc của mái là sự xuất hiện của 2 đầu kim chầu mặt nguyệt. Tầng thứ 3 của tam quan có phía sau và phía trước với gian giữa đục thông phong 1 bức phù điêu lớn. Ở giữa còn là sự xuất hiện của bánh xe chuyển pháp luân, hoa văn mây ở xung quanh.
+		Từ đây, hai bên tả, hữu gắn liền với hành lang La Hán dẫn lối lên các quần thể công trình phía trên...'))" />
+
+	</scene>
+
+	<scene name="scene_2_l1tamquan_noi3" title="Trước cửa Tam Quan Nội" onstart="" thumburl="panos/2_l1tamquan_noi3.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-1.171" vlookat="-19.537" fovtype="MFOV" fov="123.999" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l1tamquan_noi3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l1tamquan_noi3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-1.903" atv="5.600" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi5" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-179.240" atv="23.847" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi2" />
+		<hotspot name="spot3" style="hs_flycam" ath="-178.590" atv="-34.567" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+
+	</scene>
+
+	<scene name="scene_2_l1tamquan_noi5" title=" Bên trong Tam Quan Nội" onstart="" thumburl="panos/2_l1tamquan_noi5.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.028" vlookat="-0.274" fovtype="MFOV" fov="127.866" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l1tamquan_noi5.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l1tamquan_noi5.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="178.870" atv="18.576" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi3" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="-89.942" atv="3.099" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move" ath="89.510" atv="3.859" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan1" />
+
+	</scene>
+
+	<scene name="scene_2_l2hanhlanglahan1" title="Hành Lang La Hán 01" onstart="" thumburl="panos/2_l2hanhlanglahan1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-86.019" vlookat="0.055" fovtype="MFOV" fov="127.952" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l2hanhlanglahan1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l2hanhlanglahan1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-87.039" atv="-1.731" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-176.654" atv="4.335" distorted="false" zoom="false" linkedscene="scene_2_l1tamquan_noi5" />
+
+	<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-35.331" atv="11.222" distorted="false" zoom="false" onhover="Thông tin Hành Lang La Hán" onclick="js(showform('Hành Lang La Hán','Từ nhà gỗ Tam Quan theo hai hướng đông và tây dọc đến Tả vu và Hữu vu, mỗi bên gồm 117 gian hành lang, dọc theo hành lang được đặt 500 vị La Hán bằng đá xanh, mỗi vị một hình thế, một biểu cảm làm cho cuộc hành trình đi trong ngôi chùa có hành lang dài nhất châu Á trở nên thú vị. Các dãy hành lang La Hán này đều được xây dựng bằng gỗ, theo kiến trúc chồng giường, tiền bấy, hậu bấy. Nguyên liệu làm mái là ngói men được lấy từ làng gốm Bát Tràng.'))" />
+
+	</scene>
+
+	<scene name="scene_2_l2hanhlanglahan2" title="Hành Lang La Hán 02" onstart="" thumburl="panos/2_l2hanhlanglahan2.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="-77.995" vlookat="5.798" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l2hanhlanglahan2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l2hanhlanglahan2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-82.881" atv="-1.994" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="97.774" atv="4.676" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-35.475" atv="-1.978" distorted="false" zoom="false" onhover="Thông tin Hành Lang La Hán" onclick="js(showform('Hành Lang La Hán','Từ nhà gỗ Tam Quan theo hai hướng đông và tây dọc đến Tả vu và Hữu vu, mỗi bên gồm 117 gian hành lang, dọc theo hành lang được đặt 500 vị La Hán bằng đá xanh, mỗi vị một hình thế, một biểu cảm làm cho cuộc hành trình đi trong ngôi chùa có hành lang dài nhất châu Á trở nên thú vị. Các dãy hành lang La Hán này đều được xây dựng bằng gỗ, theo kiến trúc chồng giường, tiền bấy, hậu bấy. Nguyên liệu làm mái là ngói men được lấy từ làng gốm Bát Tràng.'))" />
+		
+	</scene>
+
+	<scene name="scene_2_l2hanhlanglahan3" title="Hành Lang La Hán 03" onstart="" thumburl="panos/2_l2hanhlanglahan3.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="-89.055" vlookat="-4.460" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l2hanhlanglahan3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l2hanhlanglahan3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="91.346" atv="2.153" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-40.679" atv="2.810" distorted="false" zoom="false" onhover="Thông tin Hành Lang La Hán" onclick="js(showform('Hành Lang La Hán','Từ nhà gỗ Tam Quan theo hai hướng đông và tây dọc đến Tả vu và Hữu vu, mỗi bên gồm 117 gian hành lang, dọc theo hành lang được đặt 500 vị La Hán bằng đá xanh, mỗi vị một hình thế, một biểu cảm làm cho cuộc hành trình đi trong ngôi chùa có hành lang dài nhất châu Á trở nên thú vị. Các dãy hành lang La Hán này đều được xây dựng bằng gỗ, theo kiến trúc chồng giường, tiền bấy, hậu bấy. Nguyên liệu làm mái là ngói men được lấy từ làng gốm Bát Tràng.'))" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-88.714" atv="-3.947" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+	</scene>
+
+	<scene name="scene_3_f3thapchuong1" title="Tháp Chuông" onstart="" thumburl="panos/3_f3thapchuong1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-5.752" vlookat="12.653" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_f3thapchuong1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/3_f3thapchuong1.tiles/pano_%s.jpg" />
+		</image>
+				<hotspot name="spot9" style="Iconcallout_point_straight_blue" ath="-9.602" atv="-4.456"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="0.245" atv="39.848" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong1" />
+		<hotspot name="spot2" style="Iconcallout_pano_left" ath="1.128" atv="1.122"  distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		
+		<hotspot name="spot5" style="Iconcallout_bottom" ath="178.008" atv="6.835"  distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot6" style="Iconcallout_bottom" ath="18.743" atv="-13.684" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot7" style="hs_flycam"  ath="178.036" atv="-20.652"  distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot8" style="Iconcallout_bottom" ath="8.818" atv="-5.826"  distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"    ath="-84.848" atv="-2.729"   distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+	</scene>
+	<scene name="scene_3_l3thapchuong1" title="Bên ngoài Tháp Chuông" onstart="" thumburl="panos/3_l3thapchuong1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-7.947" vlookat="-11.921" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_l3thapchuong1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/3_l3thapchuong1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-7.029" atv="0.732" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong2" />
+		<hotspot name="spot2" style="hs_flycam"  ath="-59.018" atv="-49.722" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot3" style="hs_flycam" ath="32.045" atv="-35.6" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info"  ath="-6.843" atv="4.464" distorted="false" zoom="false"  onhover="Thông tin Tháp Chuông" onclick="js(showform('Tháp Chuông','Tháp chuông đc xây dựng theo kiến trúc tháp chuông cổ, ôm lấy các hàm xà là các hàm xà là các họa tiết xà chồng cổ ngỗng đắp xung quanh. 
+		Cấu trúc hình bát giác với 24 mái cong và 24 mái đao cong vút lên, khách tham quan khu du lịch Chùa Bái Đính có thể dễ dàng nhìn thấy chúng theo kiểu xếp chồng diêm vậy. Với 3 tầng mái hẹp cong dần được lợp bằng ngói men màu nâu sẫm của làng Bát Tràng, một nơi có truyền thống gốm sứ cả trăm năm. 
+		Mỗi mái đao cao 1,65 m và được thiết kế theo kiểu hoa lá dây, là một biểu tượng cho sự sinh sôi và trường tồn vĩnh cửu, bên dưới là các con bài họa tiết cao 2,3 m dùng để đỡ chân đao. Trên cùng của tháp chuông Chùa Bái Đính là chóp tháp hình búp sen cao với chiều dài 3,5m. Tháp chuông Chua Bai Dinh gồm 3 tầng, có lối lên xuông độc lập cao gần 22m nếu tính đến đỉnh chop với đường kính bên trong là 17m.
+
+		Bên trong tháp là chuông đồng (Đại Hồng Chuông) và trống đồng lớn nhất Việt Nam
+		Đại Hồng Chuông được treo phía trên nặng 36 tấn đồng, cao 5,5m, trên thân của chiếc chuông đồng này được khắc những họa tiết mô tả hình ảnh của chuông cổ, khắc lại hai bài kinh bằng chữ Hán cổ Phật giáo và các họa tiết rồng mang những dấu ấn đặc trưng qua các thời đại cùng với hình ảnh chim muông được sắp xếp hợp lý, gợi lại vẻ đẹp của những chiếc chuông đồng cổ và nét đẹp văn hiến xưa.
+		Nằm ngay dưới chuông đồng là chiếc trống đồng lớn nhất Việt Nam, việc đặt chuông trên trống dưới thể hiện việc âm dương hòa hợp, là một triết lý của Phật giáo. Chiếc trống đồng này được nghệ nhân mô phỏng theo trống đồng Đông Sơn với cân nặng 70 tấn và độ cao 4,7m. Hình ảnh mặt trời ở trung tâm mặt trống, xung quanh là vạn vật sinh sôi nảy nở, hình ảnh sinh hoạt của con người, đây là hình ảnh thể hiện sự hòa hợp giữa trời đất và vạn vật.'))" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="173.028" atv="1.813" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan2" />
+				
+
+	</scene>
+
+	<scene name="scene_3_l3thapchuong2" title="Lối ra/vào Tháp Chuông" onstart="" thumburl="panos/3_l3thapchuong2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-2.196" vlookat="-14.536" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_l3thapchuong2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/3_l3thapchuong2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-177.886" atv="15.523" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong1" />
+		<hotspot name="spot2" style="hs_flycam"  ath="-76.622" atv="-55.105"  distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move" ath="-7.626" atv="7.652" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong4" />
+
+		<hotspot name="spot4" style="skin_hotspotstyle_info"   ath="-15.595" atv="4.864" distorted="false" zoom="false"  onhover="Thông tin Tháp Chuông" onclick="js(showform('Tháp Chuông','Tháp chuông đc xây dựng theo kiến trúc tháp chuông cổ, ôm lấy các hàm xà là các hàm xà là các họa tiết xà chồng cổ ngỗng đắp xung quanh. 
+		Cấu trúc hình bát giác với 24 mái cong và 24 mái đao cong vút lên, khách tham quan khu du lịch Chùa Bái Đính có thể dễ dàng nhìn thấy chúng theo kiểu xếp chồng diêm vậy. Với 3 tầng mái hẹp cong dần được lợp bằng ngói men màu nâu sẫm của làng Bát Tràng, một nơi có truyền thống gốm sứ cả trăm năm. 
+		Mỗi mái đao cao 1,65 m và được thiết kế theo kiểu hoa lá dây, là một biểu tượng cho sự sinh sôi và trường tồn vĩnh cửu, bên dưới là các con bài họa tiết cao 2,3 m dùng để đỡ chân đao. Trên cùng của tháp chuông Chùa Bái Đính là chóp tháp hình búp sen cao với chiều dài 3,5m. Tháp chuông Chua Bai Dinh gồm 3 tầng, có lối lên xuông độc lập cao gần 22m nếu tính đến đỉnh chop với đường kính bên trong là 17m.
+
+		Bên trong tháp là chuông đồng (Đại Hồng Chuông) và trống đồng lớn nhất Việt Nam
+		Đại Hồng Chuông được treo phía trên nặng 36 tấn đồng, cao 5,5m, trên thân của chiếc chuông đồng này được khắc những họa tiết mô tả hình ảnh của chuông cổ, khắc lại hai bài kinh bằng chữ Hán cổ Phật giáo và các họa tiết rồng mang những dấu ấn đặc trưng qua các thời đại cùng với hình ảnh chim muông được sắp xếp hợp lý, gợi lại vẻ đẹp của những chiếc chuông đồng cổ và nét đẹp văn hiến xưa.
+		Nằm ngay dưới chuông đồng là chiếc trống đồng lớn nhất Việt Nam, việc đặt chuông trên trống dưới thể hiện việc âm dương hòa hợp, là một triết lý của Phật giáo. Chiếc trống đồng này được nghệ nhân mô phỏng theo trống đồng Đông Sơn với cân nặng 70 tấn và độ cao 4,7m. Hình ảnh mặt trời ở trung tâm mặt trống, xung quanh là vạn vật sinh sôi nảy nở, hình ảnh sinh hoạt của con người, đây là hình ảnh thể hiện sự hòa hợp giữa trời đất và vạn vật.'))" />
+		
+	</scene>
+
+	<scene name="scene_3_l3thapchuong3" title="Tầng 1 Tháp Chuông" onstart="" thumburl="panos/3_l3thapchuong3.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_l3thapchuong3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/3_l3thapchuong3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="79.701" atv="18.342" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong2" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="-80.958" atv="19.237" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong4" />
+		
+		<hotspot name="spot4" style="skin_hotspotstyle_info"   ath="52.987" atv="-5.553" distorted="false" zoom="false"  onhover="Thông tin Trống Đồng" onclick="js(showform('Trống Đồng','
+		Nằm ngay dưới chuông đồng là chiếc trống đồng lớn nhất Việt Nam, việc đặt chuông trên trống dưới thể hiện việc âm dương hòa hợp, là một triết lý của Phật giáo. Chiếc trống đồng này được nghệ nhân mô phỏng theo trống đồng Đông Sơn với cân nặng 70 tấn và độ cao 4,7m. Hình ảnh mặt trời ở trung tâm mặt trống, xung quanh là vạn vật sinh sôi nảy nở, hình ảnh sinh hoạt của con người, đây là hình ảnh thể hiện sự hòa hợp giữa trời đất và vạn vật.'))" />
+	</scene>
+
+	<scene name="scene_3_l3thapchuong4" title="Tầng 2 Tháp Chuông" onstart="" thumburl="panos/3_l3thapchuong4.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="-3.914" vlookat="-9.106" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_l3thapchuong4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/3_l3thapchuong4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="57.495" atv="14.395" distorted="false" zoom="false" linkedscene="scene_3_l3thapchuong3" />
+		<hotspot name="spot4" style="skin_hotspotstyle_info"   ath="24.94" atv="-9.595" distorted="false" zoom="false"  onhover="Thông tin Chuông Đồng" onclick="js(showform('Chuông Đồng','
+		Đại Hồng Chuông hay còn gọi là Đại Hồng Chuông được treo phía trên nặng 36 tấn đồng, cao 5,5m, trên thân của chiếc chuông đồng này được khắc những họa tiết mô tả hình ảnh của chuông cổ, khắc lại hai bài kinh bằng chữ Hán cổ Phật giáo và các họa tiết rồng mang những dấu ấn đặc trưng qua các thời đại cùng với hình ảnh chim muông được sắp xếp hợp lý, gợi lại vẻ đẹp của những chiếc chuông đồng cổ và nét đẹp văn hiến xưa.'))" />
+	</scene>
+
+	<scene name="scene_4_f4dienquanam1" title="Điện Quán Âm" onstart="" thumburl="panos/4_f4dienquanam1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="2.476" vlookat="5.904" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/4_f4dienquanam1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/4_f4dienquanam1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-0.729" atv="25.434" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam2" />
+		<hotspot name="spot2" style="Iconcallout_pano_left" ath="-1.133" atv="-5.167" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot3" style="Iconcallout_point_straight_blue"  ath="-12.916" atv="-7.796" distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot4" style="Iconcallout_bottom" ath="26.3" atv="-19.102" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot5" style="Iconcallout_bottom"  ath="178.479" atv="0.07" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot6" style="hs_flycam"  ath="179.422" atv="-25.899" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot7" style="Iconcallout_point_straight_brown" ath="-91.175" atv="-4.083" distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+	</scene>
+	<scene name="scene_4_f4dienquanam2" title="Sân Điện Quán Âm" onstart="" thumburl="panos/4_f4dienquanam2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-5.115" vlookat="3.912" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/4_f4dienquanam2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/4_f4dienquanam2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-3.333" atv="18.550" distorted="false" zoom="false" linkedscene="scene_4_l4dienquanam1" />
+		<hotspot name="spot2" style="hs_flycam"  ath="176.687" atv="-27.595" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot3" style="hs_flycam" ath="-2.331" atv="-31.544" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot4" style="Iconcallout_bottom"  ath="176.163" atv="-2.865" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+
+		<hotspot name="spot5" style="skin_hotspotstyle_info"    ath="-3.292" atv="21.906" distorted="false" zoom="false"  onhover="Thông tin Điện Quán Âm" onclick="js(showform('Điện Quán Âm','Điện được xây dựng hoàn toàn bằng gỗ tứ thiếp, trong điện là tượng phật bà quan âm ngàn tay, ngàn mắt được dát vàng và cũng là pho tượng phật bà lớn nhất Việt Nam.'))" />
+		<hotspot name="spot6" style="skin_hotspotstyle" ath="52.486" atv="8.106" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan3" />
+		
+	</scene>
+	<scene name="scene_4_l4dienquanam1" title="Bên ngoài Điện Quán Âm" onstart="" thumburl="panos/4_l4dienquanam1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="36.249" vlookat="-0.995" fovtype="MFOV" fov="140.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/4_l4dienquanam1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/4_l4dienquanam1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="84.526" atv="9.840" distorted="false" zoom="false" linkedscene="scene_4_l4dienquanam2" />
+		<hotspot name="spot1" style="hs_flycam"  ath="-176.888" atv="-36.459" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+			<hotspot name="spot3" style="skin_hotspotstyle_move" ath="-79.501" atv="9.510" distorted="false" zoom="false" linkedscene="scene_4_l4dienquanam2" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="118.362" atv="2.709" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan3" />
+		
+
+	</scene>
+	<scene name="scene_4_l4dienquanam2" title="Bên trong Điện Quán Âm" onstart="" thumburl="panos/4_l4dienquanam2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="4.713" vlookat="-14.451" fovtype="MFOV" fov="123.999" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/4_l4dienquanam2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/4_l4dienquanam2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev"  ath="-142.110" atv="11.487" distorted="false" zoom="false" linkedscene="scene_4_l4dienquanam1" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="151.126" atv="10.891" distorted="false" zoom="false" linkedscene="scene_4_l4dienquanam1" />
+
+		<hotspot name="spot3" style="skin_hotspotstyle_info"    ath="30.438" atv="3.956" distorted="false" zoom="false"  onhover="Thông tin Điện Quán Âm" onclick="js(showform('Điện Quán Âm','Điện được xây dựng hoàn toàn bằng gỗ tứ thiếp, trong điện là tượng phật bà quan âm ngàn tay, ngàn mắt được dát vàng và cũng là pho tượng phật bà lớn nhất Việt Nam.'))" />
+		
+	</scene>
+
+	
+	<scene name="scene_5_f5diengiaochu4" title="Điện Pháp Chủ " onstart="" thumburl="panos/5_f5diengiaochu4.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="1.507" vlookat="16.249" fovtype="MFOV" fov="111.456" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_f5diengiaochu4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_f5diengiaochu4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-0.428" atv="33.028" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu5" />
+		<hotspot name="spot2" style="Iconcallout_bottom" ath="0.495" atv="-4.111" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot3" style="Iconcallout_bottom" ath="48.328" atv="-18.250" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot4" style="Iconcallout_right" ath="-177.950" atv="13.087" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot5" style="Iconcallout_pano_left" ath="-178.480" atv="5.207" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot6" style="Iconcallout_right" ath="-178.656" atv="3.082" distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot7" style="hs_flycam" ath="-178.672" atv="-18.13" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot8" style="Iconcallout_bottom" ath="20.699" atv="-3.752" distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+		<hotspot name="spot9" style="Iconcallout_point_straight_blue" ath="-12.133" atv="-1.33"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+	
+			<hotspot name="spot11" style="skin_hotspotstyle" ath="50.13" atv="30.094" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan4" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"   ath="-101.934" atv="-4.054"   distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+	</scene>
+
+	<scene name="scene_5_f5diengiaochu5" title="Sân Điện Pháp Chủ" onstart="" thumburl="panos/5_f5diengiaochu5.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="1.673" vlookat="-5.856" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_f5diengiaochu5.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_f5diengiaochu5.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="1.167" atv="14.657" distorted="false" zoom="false" linkedscene="scene_5_5dienphapchu1" />
+		<hotspot name="spot2" style="hs_flycam" ath="0.821" atv="-33.544" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot3" style="Iconcallout_bottom" ath="56.564" atv="-28.534" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot4" style="hs_flycam"  ath="-171.673" atv="-25.901" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot9" style="skin_hotspotstyle_info" ath="6.620" atv="16.971" distorted="false" zoom="false" onhover="Thông tin Điện Pháp Chủ" onclick="js(showform('Điện Pháp Chủ',' Qua điện Quán Âm là Điện Pháp Chủ với hồ phóng sinh có hình thù gần như vuông với chiêu ngang 63m, chiếu dài 77m, có diện tích gần 5.000m2. Độ sâu của nước là 4m. Bờ hồ rộng theo 4 bên, mỗi bên 7m.
+		Qua hồ Phóng sinh là đến sân lát đá, chiều ngang 110 m, chiều dài 53,2m, với diện tích 5.850m2. Phía tây và phía đông của sân đi hết hành lang La Hán là hai dãy nhà Tả vu và Hữu vu, mỗi dãy 7 gian (5 gian chính và hai gian chái), xây dựng bằng bê tông cốt thép giả gỗ, cao 22m, có diên tích 1.344m2. Đây là nơi để các Phật tử và khách thập phương sửa lẽ.
+
+		Đi hết sân lát đá, bước lên cao nhiều bậc đá là đến Điện pháp chủ chùa Bái Đính, Điện thờ Phật Tổ được dựng bằng gỗ tứ thiếp, cao gần 30m, dài 44,7m, rộng 43,3m, có diện tích 1.945m, gồm 2 tầng mái cong, có 8 mái ở bốn phía và một hàng cổ lâu để nâng độ cao, lấy ánh sáng và thông khí, đầu đao đao cao tới 1,3m, mái đao cao 2,6m, riêng mặt nguyệt ở đỉnh mái cao đến 4,4m, đầu kìm cao 3,3m. Điện có 5 gian, gian giữa rất rộng, dài đến 13,5m, 4 gian hai bên, mỗi gian dài 8,13m. Trong điện có 56 cột bê tông cốt thép, gồm hai hàng cột cái ở giữa, mỗi hàng 4 cột; hai hàng cột trung, mỗi hàng 4 cột; cột con ở bốn phía gồm 20 cột, cột hiên ở bốn phía gồm 20 cột. Các cột bê tông giả gỗ trong điện rất cao to. Cột cái cao 22,6m, đường kính 1m, cột trung cao 17,2m, đường kính 0,8m, cột con cao 9m, đường kính 0,7m, cột hiên cao 7,4m, đường kính 0,7m. Các cột bê tông cốt thép ở trong điện đều được ốp gỗ. Gian giữa và hai gian hai bên đểu có hộc cửa, lắp cánh cửa bằng gỗ lim. Chỉ có hộc cửa và cánh cửa ở điện pháp chủ chùa Bái Đính mới dùng đến gỗ, còn lại toàn bộ điện đều làm bằng bê tông cốt thép giả gỗ. Kỹ thuật sơn phủ ngoài rất tinh xảo, khiến nhìn xa đều lầm tưởng là gỗ. Gian cửa giữa có 12 cánh cửa, mỗi cánh cao 3,7m, rộng l,05m; hai gian bên có 8 cánh cửa, mỗi cánh cao 3,7m, rộng 0,84m, đều làm theo kiểu triện tàu cài lá. Tường sau, hai hồi và phía trước hai gian hồi, phía ngoài tường xây gạch không trát, phía trong xây các ô nhỏ cao 0,59 m, rộng 0,3m, sâu 0,3m, tất cả có 1.284 ố nhỏ, bên trong đặt 1.284 pho tượng Thích Ca Mâu Ni nhỏ bằng đồng.'))" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="91.944" atv="9.869" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan4" />
+				
+	</scene>
+	<scene name="scene_5_5dienphapchu1" title="Điện Pháp Chủ 1" onstart="" thumburl="panos/5_5dienphapchu1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="3.236" vlookat="-12.864" fovtype="MFOV" fov="127.819" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_5dienphapchu1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_5dienphapchu1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="86.683" atv="9.765" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu3" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="-78.474" atv="9.108" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu4" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="154.633" atv="11.612" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu5" />
+		<hotspot name="spot4" style="skin_hotspotstyle_move_prev" ath="-144.176" atv="11.684" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu5" />
+		<hotspot name="spot5" style="skin_hotspotstyle_info" ath="30.524" atv="6.122" distorted="false" zoom="false" onhover="Thông tin Điện Pháp Chủ" onclick="js(showform('Điện Pháp Chủ',' Qua điện Quán Âm là Điện Pháp Chủ với hồ phóng sinh có hình thù gần như vuông với chiêu ngang 63m, chiếu dài 77m, có diện tích gần 5.000m2. Độ sâu của nước là 4m. Bờ hồ rộng theo 4 bên, mỗi bên 7m.
+		Qua hồ Phóng sinh là đến sân lát đá, chiều ngang 110 m, chiều dài 53,2m, với diện tích 5.850m2. Phía tây và phía đông của sân đi hết hành lang La Hán là hai dãy nhà Tả vu và Hữu vu, mỗi dãy 7 gian (5 gian chính và hai gian chái), xây dựng bằng bê tông cốt thép giả gỗ, cao 22m, có diên tích 1.344m2. Đây là nơi để các Phật tử và khách thập phương sửa lẽ.
+
+		Đi hết sân lát đá, bước lên cao nhiều bậc đá là đến Điện pháp chủ chùa Bái Đính, Điện thờ Phật Tổ được dựng bằng gỗ tứ thiếp, cao gần 30m, dài 44,7m, rộng 43,3m, có diện tích 1.945m, gồm 2 tầng mái cong, có 8 mái ở bốn phía và một hàng cổ lâu để nâng độ cao, lấy ánh sáng và thông khí, đầu đao đao cao tới 1,3m, mái đao cao 2,6m, riêng mặt nguyệt ở đỉnh mái cao đến 4,4m, đầu kìm cao 3,3m. Điện có 5 gian, gian giữa rất rộng, dài đến 13,5m, 4 gian hai bên, mỗi gian dài 8,13m. Trong điện có 56 cột bê tông cốt thép, gồm hai hàng cột cái ở giữa, mỗi hàng 4 cột; hai hàng cột trung, mỗi hàng 4 cột; cột con ở bốn phía gồm 20 cột, cột hiên ở bốn phía gồm 20 cột. Các cột bê tông giả gỗ trong điện rất cao to. Cột cái cao 22,6m, đường kính 1m, cột trung cao 17,2m, đường kính 0,8m, cột con cao 9m, đường kính 0,7m, cột hiên cao 7,4m, đường kính 0,7m. Các cột bê tông cốt thép ở trong điện đều được ốp gỗ. Gian giữa và hai gian hai bên đểu có hộc cửa, lắp cánh cửa bằng gỗ lim. Chỉ có hộc cửa và cánh cửa ở điện pháp chủ chùa Bái Đính mới dùng đến gỗ, còn lại toàn bộ điện đều làm bằng bê tông cốt thép giả gỗ. Kỹ thuật sơn phủ ngoài rất tinh xảo, khiến nhìn xa đều lầm tưởng là gỗ. Gian cửa giữa có 12 cánh cửa, mỗi cánh cao 3,7m, rộng l,05m; hai gian bên có 8 cánh cửa, mỗi cánh cao 3,7m, rộng 0,84m, đều làm theo kiểu triện tàu cài lá. Tường sau, hai hồi và phía trước hai gian hồi, phía ngoài tường xây gạch không trát, phía trong xây các ô nhỏ cao 0,59 m, rộng 0,3m, sâu 0,3m, tất cả có 1.284 ố nhỏ, bên trong đặt 1.284 pho tượng Thích Ca Mâu Ni nhỏ bằng đồng.'))" />
+				
+	</scene>
+	<scene name="scene_5_l5dienphapchu3" title="Điện Pháp Chủ 2" onstart="" thumburl="panos/5_l5dienphapchu3.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="4.601" vlookat="-0.314" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_l5dienphapchu3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_l5dienphapchu3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="1.280" atv="14.414" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu2" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-86.291" atv="14.016" distorted="false" zoom="false" linkedscene="scene_5_5dienphapchu1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="-176.877" atv="10.337" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu5" />
+
+	</scene>
+	<scene name="scene_5_l5dienphapchu2" title="Điện Pháp Chủ 3" onstart="" thumburl="panos/5_l5dienphapchu2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.280" vlookat="-7.998" fovtype="MFOV" fov="127.868" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_l5dienphapchu2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_l5dienphapchu2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-177.847" atv="16.998" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu3" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="27.806" atv="11.270" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu5" />
+
+	</scene>
+
+	
+
+	<scene name="scene_5_l5dienphapchu4" title="Điện Pháp Chủ 4" onstart="" thumburl="panos/5_l5dienphapchu4.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.000" vlookat="0.000" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_l5dienphapchu4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_l5dienphapchu4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="14.735" atv="6.375" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu5" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="92.743" atv="14.906" distorted="false" zoom="false" linkedscene="scene_5_5dienphapchu1" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="-177.646" atv="11.287" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu5" />
+
+	</scene>
+
+	<scene name="scene_5_l5dienphapchu5" title="Điện Pháp Chủ 5" onstart="" thumburl="panos/5_l5dienphapchu5.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="186.511" vlookat="-2.721" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_l5dienphapchu5.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/5_l5dienphapchu5.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-94.289" atv="8.848" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu4" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="103.963" atv="9.661" distorted="false" zoom="false" linkedscene="scene_5_l5dienphapchu2" />
+
+	</scene>
+	<scene name="scene_2_l2hanhlanglahan4" title="Hành Lang La Hán 4" onstart="" thumburl="panos/2_l2hanhlanglahan4.tiles/thumb.jpg" lat="0.00000000" lng="0.00000000" heading="0.0">
+
+		<view hlookat="-76.582" vlookat="-3.079" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_l2hanhlanglahan4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/2_l2hanhlanglahan4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-88.706" atv="-3.601" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="91.374" atv="1.860" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot3" style="skin_hotspotstyle_info" ath="-40.493" atv="3.162" distorted="false" zoom="false"  onhover="Thông tin Hành Lang La Hán" onclick="js(showform('Hành Lang La Hán','Từ nhà gỗ Tam Quan theo hai hướng đông và tây dọc đến Tả vu và Hữu vu, mỗi bên gồm 117 gian hành lang, dọc theo hành lang được đặt 500 vị La Hán bằng đá xanh, mỗi vị một hình thế, một biểu cảm làm cho cuộc hành trình đi trong ngôi chùa có hành lang dài nhất châu Á trở nên thú vị. Các dãy hành lang La Hán này đều được xây dựng bằng gỗ, theo kiến trúc chồng giường, tiền bấy, hậu bấy. Nguyên liệu làm mái là ngói men được lấy từ làng gốm Bát Tràng.'))" />
+
+	</scene>
+
+	
+
+	<scene name="scene_6_f6dientamthe3" title="Điện Tam Thế" onstart="" thumburl="panos/6_f6dientamthe3.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-4.230" vlookat="-5.664" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_f6dientamthe3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_f6dientamthe3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-3.090" atv="8.816" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe2" />
+		<hotspot name="spot2" style="Iconcallout_bottom" ath="120.804" atv="-20.761" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot3" style="Iconcallout_bottom" ath="59.114" atv="-9.593" distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+		<hotspot name="spot4" style="Iconcallout_pano_left" ath="175.825" atv="7.843" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot5" style="hs_flycam" ath="176.853" atv="-20.099" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot6" style="Iconcallout_right"  ath="175.822" atv="5.478"  distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot7" style="hs_flycam" ath="-2.055" atv="-37.281" distorted="false" zoom="false" linkedscene="scene_0_f0tongthenhintuphiasau" />
+		<hotspot name="spot8" style="skin_hotspotstyle_info" ath="-8.199" atv="21.949" distorted="false" zoom="false" onhover="Thông tin Điện Tam Thế" onclick="js(showform('Điện Tam Thế',' Sau khi bước lên cao qua 200 bậc đá, du khách lên đến sân Điện Tam Thế chùa Bái Đính. Sân Điện Tam Thế có diện tích 13.000m2 bao quanh toàn bộ Điện.
+		Từ sân, có hai lối lên toà Tam Thế chùa Bái Đính, mỗi lối rộng 8m, gồm 32 bậc đá theo độ cao từ sân lên đến hiên là 4m. Giữa hai lối lên còn làm một phù điêu đá hình vuông mỗi chiều 10m, có diện tích 100m2 được ghép bằng nhiều phiến đá. Hai bên bức phù điêu dựng hai con rồng đá lớn, dài 10m, chạm khắc thông phong. Điện Tam Thế là điện lớn nhất trong các điện, cao 34m, dài 59,1m, rộng hơn 40m, diện tích 2.364m2.
+		Toà Tam Thế chùa cũng giống nhự điện thờ Phật Tổ, tường sau, hai hồi và tường trước của bốn gian gần hai hổi, phía ngoài tường xây gạch mộc, phía trong xây 1.808 ô nhỏ cao 0,59m, rộng 0,3m, sâu 0,3m, trong đó đặt 1.808 tượng Phật nhỏ bằng đồng. Ba gian giữa trong toà Tam Thế chùa Bái Đính đều có 3 bức hoành phi và ba cửa võng đều làm bằng gỗ vàng tâm, sơn son thếp bạc phủ hoàn kim, thiết kế giống như hoành phi và cửa võng ở điện thờ Phật Tổ. Bức hoành phi ở gian giữa dài 8,8 m, rộng 3,2m, dầy 0,06m, dùng hết gần 3 khối gỗ thành khí. Cửa võng có chiều ngang 9,46m, chiều dọc theo cột 9,3m, dầy 0,12m, nặng khoảng trên 6 tấn, dùng hết trên 13 khối gỗ thành khí. Các cửa võng ở đây làm nền cho Phật điện như loé lên những điểm sáng của ánh vàng để hướng con người vào cõi Phật. Đây được coi là những tác phẩm nghệ thuật có giá trị cao.
+		Trong toà Tam Thế chùa Bái Đính nổi bật với 3 pho tượng Tam Thế bằng đồng nguyên khối, mỗi tượng cao 7,2m, nặng 50 tấn đều dát vàng trên ba bệ cao 1,5m, ốp đá thước chạm khắc hoa văn trồng rất bề thế. Trung tâm sách kỷ lục Việt Nam đã cấp bằng Xác nhận kỷ lục “Ngôi chùa có bộ tượng Tam Thế bằng đồng lớn nhất Việt Nam”, ngày 12 tháng 12 năm 2007.'))" />
+		<hotspot name="spot9" style="skin_hotspotstyle" ath="80.698" atv="13.185" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan4" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"  ath="-115.86" atv="-1.736"   distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+
+		<hotspot name="spot11" style="Iconcallout_point_straight_blue"  ath="-39.215" atv="-13.769"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+	</scene>
+	
+
+	<scene name="scene_6_l6dentamthe2" title=" Trước cửa Điện Tam Thế " onstart="" thumburl="panos/6_l6dentamthe2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.950" vlookat="-1.929" fovtype="MFOV" fov="134.972" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="62.432" atv="10.543" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe3" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="-63.206" atv="10.543" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe3" />
+		<hotspot name="spot3" style="hs_flycam"  ath="-178.293" atv="-28.377" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot4" style="Iconcallout_bottom" ath="132.138" atv="-20.616" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot5" style="skin_hotspotstyle" ath="132.699" atv="3.422" distorted="false" zoom="false" linkedscene="scene_2_l2hanhlanglahan4" />
+		
+
+	</scene>
+
+	<scene name="scene_6_l6dentamthe3" title="Điện Tam Thế 1" onstart="" thumburl="panos/6_l6dentamthe3.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.321" vlookat="1.881" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe3.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe3.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-96.182" atv="7.374" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe4" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-137.888" atv="9.275" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe2" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="137.082" atv="8.648" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe2" />
+		<hotspot name="spot4" style="skin_hotspotstyle_move" ath="89.650" atv="5.925" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe9" />
+		<hotspot name="spot5" style="skin_hotspotstyle_info" ath="22.429" atv="7.88" distorted="false" zoom="false" onhover="Thông tin Điện Tam Thế" onclick="js(showform('Điện Tam Thế',' Sau khi bước lên cao qua 200 bậc đá, du khách lên đến sân Điện Tam Thế chùa Bái Đính. Sân Điện Tam Thế có diện tích 13.000m2 bao quanh toàn bộ Điện.
+		Từ sân, có hai lối lên toà Tam Thế chùa Bái Đính, mỗi lối rộng 8m, gồm 32 bậc đá theo độ cao từ sân lên đến hiên là 4m. Giữa hai lối lên còn làm một phù điêu đá hình vuông mỗi chiều 10m, có diện tích 100m2 được ghép bằng nhiều phiến đá. Hai bên bức phù điêu dựng hai con rồng đá lớn, dài 10m, chạm khắc thông phong. Điện Tam Thế là điện lớn nhất trong các điện, cao 34m, dài 59,1m, rộng hơn 40m, diện tích 2.364m2.
+		Toà Tam Thế chùa cũng giống nhự điện thờ Phật Tổ, tường sau, hai hồi và tường trước của bốn gian gần hai hổi, phía ngoài tường xây gạch mộc, phía trong xây 1.808 ô nhỏ cao 0,59m, rộng 0,3m, sâu 0,3m, trong đó đặt 1.808 tượng Phật nhỏ bằng đồng. Ba gian giữa trong toà Tam Thế chùa Bái Đính đều có 3 bức hoành phi và ba cửa võng đều làm bằng gỗ vàng tâm, sơn son thếp bạc phủ hoàn kim, thiết kế giống như hoành phi và cửa võng ở điện thờ Phật Tổ. Bức hoành phi ở gian giữa dài 8,8 m, rộng 3,2m, dầy 0,06m, dùng hết gần 3 khối gỗ thành khí. Cửa võng có chiều ngang 9,46m, chiều dọc theo cột 9,3m, dầy 0,12m, nặng khoảng trên 6 tấn, dùng hết trên 13 khối gỗ thành khí. Các cửa võng ở đây làm nền cho Phật điện như loé lên những điểm sáng của ánh vàng để hướng con người vào cõi Phật. Đây được coi là những tác phẩm nghệ thuật có giá trị cao.
+		Trong toà Tam Thế chùa Bái Đính nổi bật với 3 pho tượng Tam Thế bằng đồng nguyên khối, mỗi tượng cao 7,2m, nặng 50 tấn đều dát vàng trên ba bệ cao 1,5m, ốp đá thước chạm khắc hoa văn trồng rất bề thế. Trung tâm sách kỷ lục Việt Nam đã cấp bằng Xác nhận kỷ lục “Ngôi chùa có bộ tượng Tam Thế bằng đồng lớn nhất Việt Nam”, ngày 12 tháng 12 năm 2007.'))" />
+				
+	</scene>
+
+	<scene name="scene_6_l6dentamthe4" title="Điện Tam Thế 2" onstart="" thumburl="panos/6_l6dentamthe4.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-7.220" vlookat="-6.275" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe4.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe4.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-1.179" atv="8.947" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe5" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="94.995" atv="6.477" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe3" />
+		<hotspot name="spot3" style="skin_hotspotstyle_move_prev" ath="143.962" atv="10.755" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe2" />
+
+	</scene>
+
+	<scene name="scene_6_l6dentamthe5" title="Điện Tam Thế 3" onstart="" thumburl="panos/6_l6dentamthe5.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="4.274" vlookat="-0.443" fovtype="MFOV" fov="123.999" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe5.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe5.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-1.408" atv="8.467" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe6" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="178.151" atv="11.669" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe4" />
+		
+
+	</scene>
+
+	<scene name="scene_6_l6dentamthe6" title="Điện Tam Thế 4" onstart="" thumburl="panos/6_l6dentamthe6.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="12.738" vlookat="-5.890" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe6.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe6.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="38.912" atv="10.876" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe8" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-160.813" atv="12.316" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe5" />
+
+	</scene>
+	<scene name="scene_6_l6dentamthe8" title="Điện Tam Thế 5" onstart="" thumburl="panos/6_l6dentamthe8.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="179.885" vlookat="2.050" fovtype="MFOV" fov="140.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe8.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe8.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="89.843" atv="9.273" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe7" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-97.318" atv="12.538" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe6" />
+		
+		
+
+	</scene>
+
+	<scene name="scene_6_l6dentamthe7" title="Điện Tam Thế 6" onstart="" thumburl="panos/6_l6dentamthe7.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="181.866" vlookat="1.238" fovtype="MFOV" fov="138.140" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe7.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe7.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="88.791" atv="9.050" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe9" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move_prev" ath="-84.532" atv="10.545" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe8" />
+		
+		
+
+	</scene>
+
+	
+
+	<scene name="scene_6_l6dentamthe9" title="Điện Tam Thế 7" onstart="" thumburl="panos/6_l6dentamthe9.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="177.307" vlookat="2.165" fovtype="MFOV" fov="140.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_l6dentamthe9.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/6_l6dentamthe9.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle_move_prev" ath="-88.713" atv="10.740" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe7" />
+		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="130.474" atv="9.022" distorted="false" zoom="false" linkedscene="scene_6_l6dentamthe3" />
+		
+
+	</scene>
+
+	
+
+	<scene name="scene_8_f8thapbaothien1" title="Tháp Báo Thiên - Bảo Tháp" onstart="" thumburl="panos/8_f8thapbaothien1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.268" vlookat="-0.402" fovtype="MFOV" fov="131.496" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/8_f8thapbaothien1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/8_f8thapbaothien1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="Iconcallout_bottom" ath="153.837" atv="-4.91"  distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+		<hotspot name="spot2" style="Iconcallout_bottom" ath="120.617" atv="-1.04" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot3" style="Iconcallout_bottom" ath="53.804" atv="9.47" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot4" style="Iconcallout_pano_left" ath="25.376" atv="8.445" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot5" style="Iconcallout_pano_left" ath="17.743" atv="5.864" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot6" style="Iconcallout_bottom" ath="9.921" atv="4.922" distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot7" style="hs_flycam"  ath="22.832" atv="-22.476" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot8" style="Iconcallout_point_straight_blue" ath="140.839" atv="-2.368"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"   ath="57.583" atv="-3.4"   distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot9" style="skin_hotspotstyle_info" ath="13.386" atv="25.158" distorted="false" zoom="false" onhover="Thông tin Tháp Báo Thiên - Bảo Tháp" onclick="js(showform('Tháp Báo Thiên - Bảo Tháp',' Với kiến trúc tinh tế chứa đựng những tinh hoa và tâm sức của các nghệ nhân, Bảo tháp hiện trở thành một biểu tượng linh thiêng của chùa Bái Đính. Kết cấu của Bảo tháp mang đậm nét văn hóa của Việt Nam. Tháp có 13 tầng, cao 99m, chân tháp là hình lục giác kiên cố với chu vi 24m. Bao phủ toàn bộ phần ngoài Bảo tháp là gạch nung Bát Tràng với hoa văn trang trí mang phong cách nghệ thuật thời Lý như mây bay, sóng nước, cánh sen. Xung quanh 6 cạnh là những tượng Phật nhỏ bằng đá được đặt hài hòa từ chân lên đến ngọn Tháp, tạo thêm điểm nhấn đặc biệt cho nơi đây. Để xây dựng một Bảo tháp độc đáo và ấn tượng như này là nhờ sự khéo léo tài tình của hàng chục thợ điêu khắc đến từ Ấn Độ và các kiến trúc sư, nghệ nhân giỏi trong nước.
+		Bước vào phía trong Bảo tháp ngay giữa trung tâm tầng một của Bảo tháp là tượng Phật thích ca mâu ni bằng đồng dát vàng rực rỡ, được đặt trên bệ thờ bằng đá xanh chạm khắc rồng, hoa sen và các linh vật một cách rất tinh xảo. 6 mặt tường là những bức phù điêu miêu tả chân thực cuộc đời của Đức Phật kể từ khi sinh ra đến khi tu hành chính đạo. Đến đây, du khách đi cầu thang bộ qua 72 bậc, chiêm ngưỡng hệ thống phù điêu đá được trạm khắc sắc nét, cầu kỳ, mô phỏng lại các điểm tích trong cuộc đời Đức Phật hoặc đi thang máy lên tầng cao nhất, tầng 13 của Bảo tháp.
+
+		Tầng 13 của Bảo tháp  là nơi đặt Xá lợi của Đức Phật được cung nghinh từ Ấn Độ, Thái Lan và Myanma vào năm 2008. Tương truyền rằng, sau khi Ngài viên tịnh, các đệ tử làm lễ trà tì, khi lửa tàn họ phát hiện trong tro có rất nhiều tinh thể trong suốt tỏa ra những tia sáng muôn màu mà sau này gọi là xá lợi Phật. Đây được coi là bảo vật của Phật giáo. Trên trần Bảo tháp được thiết kế theo phong cách Ấn Độ huyền bí, chạm khắc trên đó là hình ảnh Đức Phật, là hình tượng đài sen, chim lạc gắn trên các vách gỗ. Có thể nói, khi đặt chân đến đây, nơi linh thiêng đặt xá lợi Phật, chúng ta không chỉ được chiêm bái Phật tổ, thấm nhuần những ý niệm sâu sắc của đạo Phật, mà còn được chiêm ngưỡng toàn cảnh chùa Bái Đính nguy nga, hùng vĩ giữa những núi non trùng điệp xen lẫn thiên nhiên đất, trời.'))" />
+	</scene>
+
+	<scene name="scene_9_f9tuongphatdilac2" title="Tượng Phật Di Lặc" onstart="" thumburl="panos/9_f9tuongphatdilac2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.837" vlookat="10.875" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/9_f9tuongphatdilac2.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/9_f9tuongphatdilac2.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="Iconcallout_bottom" ath="155.075" atv="-22.122" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot2" style="Iconcallout_bottom" ath="-76.198" atv="-1.208" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot3" style="Iconcallout_pano_left" ath="-151.440" atv="8.119" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot4" style="Iconcallout_pano_left" ath="-167.000" atv="6.557" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot5" style="Iconcallout_pano_left" ath="-171.306" atv="4.702" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot6" style="Iconcallout_right" ath="-175.627" atv="4.107" distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot7" style="hs_flycam" ath="-174.249" atv="-16.795"  distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot8" style="Iconcallout_point_straight_blue" ath="-26.346" atv="0.216"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot10" style="Iconcallout_point_straight_brown"  ath="-134.674" atv="-3.302"  distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot9" style="skin_hotspotstyle_info" ath="-1.07" atv="18.344" distorted="false" zoom="false" onhover="Thông tin Tượng Phật Di Lặc" onclick="js(showform('Tượng Phật Di Lặc',' Tượng Phật Di Lặc được đặt trên ngọn đồi phía bên phải điện thờ Tam Thế Phật (nhìn từ dưới lên), khi tới thăm Chùa Bái Đính hoặc từ xa du khách đã có thể dễ dàng quan sát thấy. Tượng Phật Di Lặc của Chùa Bái Đính từng được kỷ lục Việt Nam xác nhận là tượng Di Lặc bằng đồng lớn nhất cả nước, tượng cao tới 10m và nặng đến 80 tấn cũng là địa điểm chụp ảnh rất nổi tiếng của du khách khi đến thăm Chùa Bái Đính'))" />
+		
+	</scene>
+	
+	<scene name="scene_10_f10giengngoc1" title="Giếng Ngọc" onstart="" thumburl="panos/10_f10giengngoc1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.042" vlookat="-3.240" fovtype="MFOV" fov="127.865" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/10_f10giengngoc1.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/10_f10giengngoc1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="hs_flycam" ath="-20.669" atv="-43.101" distorted="false" zoom="false" linkedscene="scene_1_f0tongthe_tutamquangngoai_lenden" />
+		<hotspot name="spot9" style="skin_hotspotstyle_info" ath="-3.992" atv="27.314" distorted="false" zoom="false" onhover="Thông tin Giếng Ngọc" onclick="js(showform('Giếng Ngọc',' Nằm ở ngay chân núi chùa Bái Đính là hạt ngọc của trời ban cho vùng đất nơi đây, đó chính là Giếng Ngọc. Tương truyền rằng, đây là nơi thiền sư Nguyễn Minh Không đã lấy nước để sắc thuốc chữa bệnh cho dân và chữa bệnh cho Vua Lý Thần Tông. 
+
+		Năm 2007 Giếng Ngọc mang về một kỷ lục cho chùa Bái Đính là: “Ngôi chùa có giếng lớn nhất Việt Nam”. Miệng giếng hình mặt nguyệt. Đường kính mặt giếng lên tới 30m. Độ sâu của nước là 6m. Giếng không khi nào hết nước, nước có màu xanh trong như mặt trăng non huyển diệu. '))" />
+	</scene>
+
+	<scene name="scene_0_f0tongthenhintuphiasau" title="Toàn cảnh chùa Bái Đính phía sau" onstart="" thumburl="panos/0_f0tongthenhintuphiasau.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.415" vlookat="12.960" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/0_f0tongthenhintuphiasau.tiles/preview.jpg" />
+
+		<image prealign="0|0.0|0">
+			<cube url="panos/0_f0tongthenhintuphiasau.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="Iconcallout_pano_left" ath="-0.499" atv="27.868" distorted="false" zoom="false" linkedscene="scene_6_f6dientamthe3" />
+		<hotspot name="spot2" style="Iconcallout_right" ath="-1.419" atv="16.336" distorted="false" zoom="false" linkedscene="scene_5_f5diengiaochu4" />
+		<hotspot name="spot3" style="Iconcallout_pano_left" ath="-1.271" atv="12.376" distorted="false" zoom="false" linkedscene="scene_4_f4dienquanam1" />
+		<hotspot name="spot4" style="Iconcallout_right" ath="-1.355" atv="10.044" distorted="false" zoom="false" linkedscene="scene_3_f3thapchuong1" />
+		<hotspot name="spot5" style="Iconcallout_pano_left" ath="-1.326" atv="8.31"  distorted="false" zoom="false" linkedscene="scene_2_f1congtamquannoi1" />
+		<hotspot name="spot6" style="Iconcallout_bottom" ath="-28.298" atv="1.517" distorted="false" zoom="false" linkedscene="scene_8_f8thapbaothien1" />
+		<hotspot name="spot7" style="Iconcallout_bottom" ath="-39.711" atv="18.572" distorted="false" zoom="false" linkedscene="scene_9_f9tuongphatdilac2" />
+
+		<hotspot name="spot8" style="Iconcallout_point_straight_blue" ath="137.112" atv="17.344"  distorted="false" zoom="false" linkedscene="scene_10_f10giengngoc1" />
+		<hotspot name="spot9" style="Iconcallout_point_straight_brown" ath="41.831" atv="1.495"   distorted="false" zoom="false" linkedscene="scene_f10tongthesuoitien2_tongthechung2_notelocation" />
+		<hotspot name="spot10" style="Iconcallout_top" ath="-73.547" atv="-1.491"  distorted="false" zoom="false" content="Động Vân Trình" />
+		<hotspot name="spot11" style="Iconcallout_top" ath="36.246" atv="20.539"  distorted="false" zoom="false" content="Khách xá" />
+	</scene>
+
+
+</krpano>
+
