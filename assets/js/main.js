@@ -2,193 +2,47 @@ $(document).ready(function(){
   // $(".guide").hide();
   $(".close").click(function(){
     $(".guide").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
   });
   $(".guide").click(function(){
       $(".guide").hide();
-      $("#icon_sharelink").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
   });
   $("#icon_guide").click(function(){
       $(".guide").show();
-      $("#icon_sharelink").css('opacity','0');
-      $("#icon_info").css('opacity','0');
-      $("#icon_mute").css('opacity','0');
-      $("#icon_unmute").css('opacity','0');
-      $("#hotspot_Close").css('opacity','0');
-      $("#hotspot_open").css('opacity','0');
-      $("#icon_fullscreen").css('opacity','0');
-      $("#icon_VR").css('opacity','0');
-      $("#icon_form").css('opacity','0');
-      $("#icon_map").css('opacity','0');
-      $("#icon_rotate").css('opacity','0');
-      $("#icon_unrotate").css('opacity','0');
-      $("#icon_album").css('opacity','0');
-
   });
 });
 // click info
 $(".close").click(function(){
   $(".info").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
+    
 });
 $(".info").click(function(){
     $(".info").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
+    
 });
 $("#icon_info").click(function(){
     $(".info").show();
-    $("#icon_sharelink").css('opacity','0');
-      $("#icon_guide").css('opacity','0');
-      $("#icon_mute").css('opacity','0');
-      $("#icon_unmute").css('opacity','0');
-      $("#hotspot_Close").css('opacity','0');
-      $("#hotspot_open").css('opacity','0');
-      $("#icon_fullscreen").css('opacity','0');
-      $("#icon_VR").css('opacity','0');
-      $("#icon_form").css('opacity','0');
-      $("#icon_map").css('opacity','0');
-      $("#icon_rotate").css('opacity','0');
-      $("#icon_unrotate").css('opacity','0');
-      $("#icon_album").css('opacity','0');
+    
 });
 // click show map
 $("#icon_map").click(function(){
   $(".map").show();
-  $("#icon_sharelink").css('opacity','0');
-  $("#icon_guide").css('opacity','0');
-  $("#icon_mute").css('opacity','0');
-  $("#icon_unmute").css('opacity','0');
-  $("#hotspot_Close").css('opacity','0');
-  $("#hotspot_open").css('opacity','0');
-  $("#icon_fullscreen").css('opacity','0');
-  $("#icon_VR").css('opacity','0');
-  $("#icon_form").css('opacity','0');
-  $("#icon_info").css('opacity','0');
-  $("#icon_rotate").css('opacity','0');
-  $("#icon_unrotate").css('opacity','0');
-  $("#icon_album").css('opacity','0');
+  
 });
 $(".close").click(function(){
   $(".map").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
+    ;
 });
 $(".map").click(function(){
     $(".map").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_form").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
-});
-$("#icon_album").click(function(){
-  $(".album_thumb").show();
-  $("#icon_sharelink").css('opacity','0');
-  $("#icon_guide").css('opacity','0');
-  $("#icon_mute").css('opacity','0');
-  $("#icon_unmute").css('opacity','0');
-  $("#hotspot_Close").css('opacity','0');
-  $("#hotspot_open").css('opacity','0');
-  $("#icon_fullscreen").css('opacity','0');
-  $("#icon_VR").css('opacity','0');
-  $("#icon_info").css('opacity','0');
-  $("#icon_map").css('opacity','0');
-  $("#icon_rotate").css('opacity','0');
-  $("#icon_unrotate").css('opacity','0');
-  $("#icon_form").css('opacity','0');
-
-});
-$(".close_album_thumb").click(function(){
-  $(".album_thumb").hide();
-  $("#icon_sharelink").css('opacity','1');
-  $("#icon_guide").css('opacity','1');
-  $("#icon_mute").css('opacity','1');
-  $("#icon_unmute").css('opacity','1');
-  $("#hotspot_Close").css('opacity','1');
-  $("#hotspot_open").css('opacity','1');
-  $("#icon_fullscreen").css('opacity','1');
-  $("#icon_VR").css('opacity','1');
-  $("#icon_info").css('opacity','1');
-  $("#icon_map").css('opacity','1');
-  $("#icon_rotate").css('opacity','1');
-  $("#icon_unrotate").css('opacity','1');
-  $("#icon_form").css('opacity','1');
-
+   
 });
 // click popup 
 $(".popup").click(function(){
   $(".popup").hide();
 });
-// $(".info_duan").click(function(){
-//   $(".info_duan").hide();
-// });
+$(".info_duan").click(function(){
+  $(".info_duan").hide();
+});
 $(".info_infomation_image").click(function(){
   $(".info_infomation_image").hide();
 });
@@ -201,7 +55,6 @@ $(".image_tra").click(function(){
 
 // click video
 $(document).ready(function(){
-  // $(".video").hide();
   $(".close").click(function(){
     $(".video").hide();
   });
@@ -214,63 +67,16 @@ $(document).ready(function(){
 });
 // click form
 $(document).ready(function(){
-  // $(".form").hide();
   $(".close").click(function(){
     $(".form").hide();
-    $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
-
   });
   $(".form").click(function(){
-      // $(".form").hide();
-      $("#icon_sharelink").css('opacity','1');
-      $("#icon_guide").css('opacity','1');
-      $("#icon_mute").css('opacity','1');
-      $("#icon_unmute").css('opacity','1');
-      $("#hotspot_Close").css('opacity','1');
-      $("#hotspot_open").css('opacity','1');
-      $("#icon_fullscreen").css('opacity','1');
-      $("#icon_VR").css('opacity','1');
-      $("#icon_info").css('opacity','1');
-      $("#icon_map").css('opacity','1');
-      $("#icon_rotate").css('opacity','1');
-      $("#icon_unrotate").css('opacity','1');
-      $("#icon_album").css('opacity','1');
-
+      $(".form").hide();
   });
   $("#icon_form").click(function(){
       $(".form").show();
-      $("#icon_sharelink").css('opacity','0');
-      $("#icon_guide").css('opacity','0');
-      $("#icon_mute").css('opacity','0');
-      $("#icon_unmute").css('opacity','0');
-      $("#hotspot_Close").css('opacity','0');
-      $("#hotspot_open").css('opacity','0');
-      $("#icon_fullscreen").css('opacity','0');
-      $("#icon_VR").css('opacity','0');
-      $("#icon_info").css('opacity','0');
-      $("#icon_map").css('opacity','0');
-      $("#icon_rotate").css('opacity','0');
-      $("#icon_unrotate").css('opacity','0');
-      $("#icon_album").css('opacity','0');
-
   });
-// xử lý popup
-$("#link_menu_top").click(function(){
-  $(".list_sub_top_mobile").css("display","block");
- 
- })
+
 
   // xử lý menu icon sub
  
@@ -293,13 +99,6 @@ $("#link_menu_top").click(function(){
     $('.arrow-right').hide();
    })
 });
-// click album
-$("#icon_album").click(function(){
-  $(".album_thumb").show();
-});
-$(".close_album_thumb").click(function(){
-  $(".album_thumb").hide();
-});
 
 // hs
 $(document).ready(function(){
@@ -307,9 +106,9 @@ $(document).ready(function(){
   $(".info_toancanh").click(function(){
     $(".form").hide();
   });
-  // $(".form").click(function(){
-  //     $(".form").hide();
-  // });
+  $(".form").click(function(){
+      $(".form").hide();
+  });
   $("info_toancanh").click(function(){
       $(".form").show();
   });
@@ -320,21 +119,21 @@ $(document).ready(function(){
 var array_list = [
   // 0
   {
-    title_list : "Khu nguyên liệu A",
+    title_list : "Thông tin khu nguyên liệu A",
     content_list: "Là khu nguyên liệu đã  và đang cho thu hoạch ổn định (gồm nhiều cây 3-7 năm tuổi, ngoài ra có các khu vực đang phát triển cây con độ tuổi 1,5 - 2,5 năm tuổi). Diện tích khoảng 10ha"
    
     
   },
   // 1
   {
-    title_list : "Khu nguyên liệu B",
+    title_list : "Thông tin khu nguyên liệu B",
     content_list: "Là khu mới phát triển (gồm nhiều cây con độ tuổi dưới 1 năm tới 2 năm tuổi), đây là khu nguyên liệu của thành viên HTX, mà trong đó thành viên được hỗ trợ giống, kỹ thuật, bao tiêu thu mua... tạo vùng nguyên liệu ổn định lâu dài cũng như tạo công ăn việc làm cho nhân dân địa phương. Diện tích khoảng 6ha."
    
   
   },
   // 2
   {
-    title_list : "Khu cây trồng lâu năm",
+    title_list : "Thông tin khu cây trồng lâu năm",
     content_list: "Khu gồm cây trà mẹ, lâu năm tuổi (cây 10-20 năm tuổi) vừa cung cấp hoa vừa cung cấp quả, hạt giống cũng như phôi chiết. Khu cây lâu năm tuổi kết hợp một số khu vực khu nguyên liệu A là nguồn cung cấp chính cây con cho cả khu vực nguyên liệu xung quanh khác."
    
    
@@ -342,7 +141,7 @@ var array_list = [
   },
   // 3
   {
-    title_list : "Khu Vườn Ươm",
+    title_list : "Thông tin khu Vườn Ươm",
     content_list: "Khu vườn ươm là nơi nhân giống, tạo sự chủ động nguồn cung cho HTX cũng như vùng nguyên liệu được bền vững."
    
    
@@ -351,12 +150,12 @@ var array_list = [
   
   // 4
   {
-    title_list : "Nhà thu mua",
+    title_list : "Thông tin Nhà thu mua",
     content_list: "Nhà ở của chủ cơ sở kinh doanh kèm chức năng thu mua nguyên liệu của thành viên HTX cũng như nhân dân quanh vùng"
   },
   // 5
   {
-    title_list : "Nhà Trưng bày sản phẩm",
+    title_list : "Thông tin Nhà Trưng bày sản phẩm",
     content_list: "Khu tổ hợp nhà trưng bày sản phẩm gồm khu trưng bày, khu xưởng sấy, kho và tiếp giáp khu vườn ươm.Đây là điểm giới thiệu và bán sản phẩm OCOP thứ 3/5 điểm giới thiệu và bán sản phẩm OCOP trên địa bàn tỉnh được hỗ trợ theo QĐ 1656/QĐ-UBND ngày 19 tháng 8 năm 2020 của UBND tỉnh đã khai trương và đi vào hoạt động "
     
    
@@ -409,12 +208,12 @@ var array_list = [
   },
   // 15
   {
-    title_list : "Máy sấy lạnh",
+    title_list : "Thông tin máy sấy lạnh",
     content_list: "Sấy lạnh là phương pháp sấy bằng tác nhân là không khí rất khô ở nhiệt độ thấp hơn nhiệt độ sấy thông thường. Dải nhiệt độ sấy từ 35-600C, độ ẩm không khí sấy vào khoảng 10-30%. Quá trình sấy được tiến hành ở áp suất khí quyển. Máy sấy lạnh được cấu thành bởi một máy bơm nhiệt được đặt trong một tủ sấy hoặc một hầm sấy tùy theo quy mô. Máy bơm nhiệt có một đầu nóng và một đầu lạnh. Đầu nóng sẽ cung cấp nhiệt lượng cho tác nhân sấy, còn đầu lạnh dùng để tách ẩm cho không khí sấy. Do đó, máy sấy lạnh còn gọi là máy sấy bơm nhiệt. "
   },
   // 16
   {
-    title_list : "Máy sấy thăng hoa",
+    title_list : "Thông tin máy sấy thăng hoa",
     content_list: "Sấy thăng hoa hay sấy đông khô: Đây là phương pháp sấy ưu việt nhất trong tất cả phương pháp sấy hiện nay. Sấy thăng hoa (freeze drying) là một kỹ thuật còn được gọi là “làm khô lạnh”. Trong đó sản phẩm được sấy khô qua quá trình thăng hoa của nước dưới nhiệt độ và áp suất thấp. Nước trong sản phẩm được đông lạnh thành đá sau đó được loại bỏ trực tiếp ra khỏi sản phẩm bằng cách hóa hơi. Điều này được thực hiện trong môi trường chân không."
   },
 
@@ -424,20 +223,20 @@ var array_list = [
 
 var array_info = [
   {
-    title_info: "Sản phẩm Trà Loại 1",
+    title_info: "Thông tin sản phẩm Trà Loại 1",
     content_info: "Trà loại 1 là ....<br> 1...<br> 2.... <br>3..."
     
    
     
   },
   {
-    title_info : "Sản phẩm Trà Loại 2",
+    title_info : "Thông tin sản phẩm Trà Loại 2",
     content_info: "Trà loại 2 là ....<br> 1...<br> 2.... <br>3..."
    
   
   },
   {
-    title_info : "Sản phẩm Trà Loại 3",
+    title_info : "Thông tin sản phẩm Trà Loại 3",
     content_info: "Trà loại 3 là ....<br> 1...<br> 2.... <br>3..."
    
    
@@ -477,13 +276,7 @@ var array_info = [
 // xử lý popup
 
 function showform(data){
-  if( $(document).width() < 601 ){
-    $(".menu_sub").hide();
-  };
-  if( $(document).width() < 801 ){
-    $(".menu_sub").hide();
-  };
-
+ 
   document.getElementById('popup_').style.display = "flex";
 
   $("#title_form").html(data.title_list);
@@ -491,24 +284,13 @@ function showform(data){
 }
 // show info tra
 function show_info(data){
-  if( $(document).width() < 601 ){
-    $(".menu_sub").hide();
-  };
-  if( $(document).width() < 801 ){
-    $(".menu_sub").hide();
-  };
   document.getElementById('info_information').style.display = "flex";
   $("#title_info_general").html(data.title_info);
   $("#content_info_general").html(data.content_info);
   
   
 }
-function close_contact(){
-  document.getElementById('form').style.display = "none";
-}
-
 function show_image(){
-  
   document.getElementById('image_tra').style.display = "flex";
 
    document.getElementById('info_information').style.display = "none";
@@ -521,12 +303,6 @@ function close_info(){
   document.getElementById('info_information').style.display = "none";
 }
 function show_htx(data){
-  if( $(document).width() < 601 ){
-    $(".menu_sub").hide();
-  };
-  if( $(document).width() < 801 ){
-    $(".menu_sub").hide();
-  };
   document.getElementById('info_duan').style.display = "flex";
  
  
@@ -585,49 +361,89 @@ function close_image_duan_tra(){
   });
 
   function krpanoReady(krpano) {
-    $("#icon_unmute").hide();
+      $("#icon_unmute").hide();
       $("#icon_unmute").on("click", function (e) {
           e.preventDefault();
-
           console.log(krpano);
           $("#icon_mute").show();
-        
           $("#icon_unmute").hide();
-    
-
           krpano.call("resumesound()");
       });
       $("#icon_mute").on("click", function (e) {
         e.preventDefault();
-
         console.log(krpano);
         $("#icon_unmute").show();
-      
         $("#icon_mute").hide();
-   
         krpano.call("pause_sound()");
-        
-        
     });
-    $(".item_menu_top_mobile").click(function(event){
-      // const id = this.id.split('_')[1];
-        var id = $(this).attr("id").split('_')[1];
-      
-        $(".list_sub_top_mobile").hide();
-        // $(`#panel_${id}`).addClass('panel-hien');
-        $(`#panel_${id}`).show();
-       
+    // mute ở mobile
+    $("#icon_unmute1").hide();
+    $("#icon_unmute1").on("click", function (e) {
+      e.preventDefault();
+      console.log(krpano);
+      $("#icon_mute1").show();
+      $("#icon_unmute1").hide();
+      krpano.call("resumesound()");
+  });
+  $("#icon_mute1").on("click", function (e) {
+    e.preventDefault();
+    console.log(krpano);
+    $("#icon_unmute1").show();
+    $("#icon_mute1").hide();
+    krpano.call("pause_sound()");
+  });
+  // rotate mobile
+  $("#icon_unrotate1").hide();
+  $("#icon_rotate1").on("click",function(e){
+    $("#icon_unrotate1").show();
+    $("#icon_rotate1").hide();
+    krpano.call("toggleRotate()");
+  });
+  $("#icon_unrotate1").on("click",function(e){
+    $("#icon_unrotate1").hide();
+    $("#icon_rotate1").show();
+    krpano.call("toggleRotate()");
+  });
+ 
+  // menu_bottom
+  $('.arrow-left').click(function(event){
+		
+		$(".menu_sliderbar").removeClass('show_menu_tour');
+		$(".logo_tour").css("display","block");
+		$(".logo_tour").addClass("transform_logo");
+		$(".menu_sliderbar").toggleClass('hide_menu_tour');
+		$('.arrow-right').show();
+		$('.arrow-left').hide();
+	});
+	$('.arrow-right').click(function(event){
+		$(".logo_tour").css("display","none");
+		 $(".menu_sliderbar").removeClass('hide_menu_tour');
+		$(".menu_sliderbar").toggleClass('show_menu_tour');
+		$('.arrow-left').show();
+		$('.arrow-right').hide();
+	});
+	$("#close_menu_bottom").click(function(){
+		$(".menu_bottom").slideToggle();
+		$(".thumblist").hide();
+		$("#show_menu_bottom").show();
+	});
+	$("#show_menu_bottom").click(function(){
+		$(".menu_bottom").slideToggle();
+		$("#show_menu_bottom").hide();
+		
+	});
+  // show thumblist
+	$("#show_thumbs").click(function(){
+		$(".thumblist").slideToggle();
+	});
 
+    // next scene
+    $("#next_scene").click(function(){
+		  krpano.call("nextscene()");
     });
-  
-    
-    // title scene html 
-
-    function getSceneTitleName(){ 
-      var title = String( krpano.get("scene[get(xml.scene)].title") ); 
-      console.log("title ="+ title);
-      $("#name_scene").html(title);
-    };
+    $("#prev_scene").click(function(){
+		  krpano.call("prevscene()");
+    });
     // xu ly VR
     $("#icon_VR").on("click", function(e){
       krpano.call("webvr.enterVR()");
@@ -645,10 +461,10 @@ function close_image_duan_tra(){
       krpano.call("toggleRotate()");
     });
 
-    // xu ly back scene
+    // xu ly scene
     
-    $("#icon_backscene").on("click",function(e){
-      krpano.call("back_scene_project()");
+    $("#icon_back").on("click",function(e){
+      krpano.call("back_scene()");
     });
     // xu ly show/hide hotspot
     $("#hotspot_open").hide();
@@ -662,15 +478,13 @@ function close_image_duan_tra(){
       $("#hotspot_Close").show();
       krpano.call("showallhotspot()");
     });
-    // $(".slick-slide.slick-current").click(function(e){
-    //   // $(".slick-slide").addclass("slick-current");
-   
-    //   krpano.call("loadscene_with_name()");
+    $(".slick-slide.slick-current").click(function(e){
+      krpano.call("loadscene_with_name()");
      
-    // });
+    });
    
     // xu ly active khi click
-  $(".item_sub_top").click(function(e){
+  $(".item").click(function(e){
     var link_scene = $(this).attr('id');
     console.log(link_scene);
    
@@ -687,7 +501,7 @@ function close_image_duan_tra(){
      
     $(this).addClass("active");
     $(this).removeClass("active_menu");
-    console.log($(this).attr('id'));
+    //console.log($(this).attr('id'));
     let target_active_menu = "#" + $(this).attr('id')
     var elems_active_menu = document.querySelectorAll(target_active_menu);
       [].forEach.call(elems_active_menu, function(el) {
@@ -695,42 +509,11 @@ function close_image_duan_tra(){
       
       });
     krpano.call("load_scene(" +link_scene + ")");
-    krpano.call("copy_scene()");
-    getSceneTitleName();
-   
-  });
-  // xu ly active khi click album thumb
-  $(".item_album").click(function(e){
-    var link_scene = $(this).attr('id');
-    console.log(link_scene);
-   
-    var elems = document.querySelectorAll(".active");
-    [].forEach.call(elems, function(el) {
-      el.classList.remove("active");
-      
-    });
-    var elems = document.querySelectorAll(".active_menu");
-      [].forEach.call(elems, function(el) {
-        el.classList.remove("active_menu");
-      
-      });
-     
-    $(this).addClass("active");
-    $(this).removeClass("active_menu");
-    console.log($(this).attr('id'));
-    let target_active_menu = "#" + $(this).attr('id')
-    var elems_active_menu = document.querySelectorAll(target_active_menu);
-      [].forEach.call(elems_active_menu, function(el) {
-        el.classList.add("active_menu");
-      
-      });
-    krpano.call("load_scene(" +link_scene + ")");
-    getSceneTitleName();
    
   });
 
   // xu lys show scene menu
-  $(".link_mobile").click(function(e){
+  $(".item_sub").click(function(e){
     var link_scene = $(this).attr('id');
    
     var elems = document.querySelectorAll(".active_menu");
@@ -749,15 +532,19 @@ function close_image_duan_tra(){
       el.classList.add("active");
     
     });
-    $(this).addClass("active_sub");
+    $(this).addClass("active_menu");
     $(this).removeClass("active");
  
     krpano.call("load_scene(" +link_scene + ")");
-    $(".menu_top_mobile").hide();
-    getSceneTitleName();
   });
   // xu ly minimap
- 
+  $(".panWrapper").mousedown(function(e){
+    e.preventDefault();
+  
+   $(".panWrapper").hide();
+    krpano.call("showmap()");
+    
+  });
  
 
    
@@ -803,14 +590,24 @@ krpano.call("loadscene(" + panoName + ");");
 }
 
 
+
 // xư lý thumbs list
 $(document).ready(function(){
- 
   $(".button_close").click(function(){
     $(".popup").hide();
   });
-  // menu mobile
- 
+  
   
   
 });
+
+
+// xu ly minimap
+$(".panWrapper").mousedown(function(e){
+  e.preventDefault();
+
+ $(".panWrapper").hide();
+  krpano.call("showmap()");
+  
+});
+

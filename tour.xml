@@ -5,13 +5,14 @@
 	
       <!-- <include url="plugins/showtext.xml" /> -->
     <!-- <include url="plugins/polygonal_hotspots_editor.xml" if="calc(editor)" /> -->
-    <include url="plugins/dragg/dragg.xml"  />
+    <!-- <include url="plugins/dragg/dragg.xml"  /> -->
     <include url="option.xml" />
     <include url="update.xml" />
  <include url="skin/vtourskin.xml" />
     <include url="plugins/popup_blur.xml" />
     <include url="plugins/youtube_player.xml" />
     <include url="plugins/showtext.xml" />
+
           
 	<include url="add_hotspot/plugins_l/add_hotspot.xml" if="calc(editor)"/>
     <include url="%FIRSTXML%/add_hotspot/plugins_l/plugin_a/poligon.xml" if="calc(editor)"/>
@@ -110,7 +111,7 @@
 		loadscene(get(startscene), null, MERGE);
 		if(startactions !== null, startactions() );
   
-         playsound(bgsound, assets/bgsound1.mp3, true, 0.8);
+         <!-- playsound(bgsound, assets/bgsound1.mp3, true, 0.8); -->
 		set(layer[mapfull].visible,false);
 		set( layer[map2].visible, false);
         linkscene_title_xml("");  
@@ -138,7 +139,7 @@
 	</action>
 
 
-	<scene name="scene_1" title="Cổng vào trường" onstart="" thumburl="panos/1.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_1" title="Cổng vào trường" onstart="playsound(bgsound, assets/voice_test.mp4);" thumburl="panos/1.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="4.099" vlookat="3.468" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -149,9 +150,14 @@
 		</image>
 		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="4.722" atv="8.252" distorted="false" zoom="false" linkedscene="scene_2" />
 
+		<hotspot name="spot2" style="skin_hotspotstyle_youtube"  ath="5.169" atv="15.492"  html="Youtube" distorted="false" zoom="false" onhover="showInfo('Thông tin về trường')"  
+         onclick=" youtubeplayer_open('M9g4WBFOCIU');" />
+
+
+
 	</scene>
 
-	<scene name="scene_2" title="Trước tòa nhà A1" onstart="" thumburl="panos/2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_2" title="Trước tòa nhà A1" onstart="playsound(bgsound, assets/testA1.mp3);" thumburl="panos/2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.000" vlookat="-2.320" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -166,7 +172,7 @@
 
 	</scene>
 
-	<scene name="scene_3" title="Tòa nhà A2" onstart="" thumburl="panos/3.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_3" title="Tòa nhà A2" onstart="playsound(bgsound, assets/testA2.mp3);" thumburl="panos/3.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="-0.000" vlookat="-3.558" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -180,6 +186,8 @@
 		<hotspot name="spot3" style="skin_hotspotstyle_move" ath="-177.478" atv="8.314" distorted="false" zoom="false" linkedscene="scene_4" />
 		<hotspot name="spot4" style="skin_hotspotstyle_move" ath="-2.925" atv="2.279" distorted="false" zoom="false" linkedscene="scene_28" />
 
+<hotspot name="spot5" style="skin_hotspotstyle_info"  ath="5.169" atv="15.492"  html="Youtube" distorted="false" zoom="false" onhover="showInfo('Thông tin về trường')"  
+         onclick=" js(showform(' Tòa Nhà A2', 'Giảng đường A2 gồm 4 tầng bao  gồm các phòng học, phòng thí nghiệm và phòng hội thảo'))" />
 	</scene>
 
 	<scene name="scene_4" title="Bên ngoài tòa A1" onstart="" thumburl="panos/4.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -257,7 +265,7 @@
 
 	</scene>
 
-	<scene name="scene_10" title="Sảnh T45" onstart="" thumburl="panos/10.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_10" title="Sảnh T45" onstart="playsound(bgsound, assets/testT45.mp3);" thumburl="panos/10.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="3.131" vlookat="4.323" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -299,7 +307,7 @@
 
 	</scene>
 
-	<scene name="scene_13" title="Lối vào tòa nhà K1" onstart="" thumburl="panos/13.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_13" title="Lối vào tòa nhà K1" onstart="playsound(bgsound, assets/testktx.mp3);" thumburl="panos/13.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="121.838" vlookat="-4.419" fovtype="MFOV" fov="102.386" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -478,7 +486,7 @@
 
 	</scene>
 
-	<scene name="scene_27" title="Tòa B5" onstart="" thumburl="panos/27.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_27" title="Tòa B5" onstart="playsound(bgsound, assets/testB.mp3);" thumburl="panos/27.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="-6.753" vlookat="-15.057" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 

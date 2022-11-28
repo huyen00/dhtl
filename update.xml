@@ -61,11 +61,11 @@
     linkedscene_lookat=""
     onclick="skin_hotspotstyle_click();copy(prevscene,xml.scene);"
     depth="1000"
-    scale="0.1"
+    scale="0.08"
     rotation="90"
     ondown="draghotspot();" 
-    onover="tween(scale,0.15);"
-    onout="tween(scale,0.1);"
+    onover="tween(scale,0.09);"
+    onout="tween(scale,0.08);"
     
   />
    
