@@ -2,8 +2,8 @@
 	<!-- youtube-player.xml 1.19 -->
 
 	<youtubeplayer_settings
-		maxsize="0.60"
-		parameters="autoplay=1&amp;autohide=1&amp;controls=1&amp;loop=1&amp;modestbranding=0&amp;rel=0&amp;showinfo=0&amp;hd=1&amp;vq=hd720"
+		maxsize="0.80"
+		parameters="autoplay=1&amp;autohide=1&amp;controls=1&amp;loop=0&amp;modestbranding=0&amp;rel=0&amp;showinfo=0&amp;hd=1&amp;vq=hd720"
 		/>
 
 	<!--
@@ -20,15 +20,12 @@
 			- e.g. set controls=0 to remove the default youtube control
 	-->
 
-	
-
 	<action name="youtubeplayer_open">
 		if(layer[youtubeplayer_bg],
 			<!-- error -->
 			trace('youtubeplayer_open - there is already a youtubeplayer!'-);
-		  ,	
+		  ,
 			<!-- step one - add a background layer and fade it in -->
-
 			addlayer(youtubeplayer_bg);
 			set(layer[youtubeplayer_bg].type, container);
 			set(layer[youtubeplayer_bg].zorder, 999999);
@@ -65,9 +62,6 @@
 
 				if(device.html5,
 					<!-- html5 - embed iframe via the textfield plugin -->
-					showlog();
-					trace(area.pixelwidth);
-					if(area.pixelwidth LT 992){
 					txtadd(iframecode, '[iframe width="',get(layer[youtubeplayer_plugin].width),'" height="',get(layer[youtubeplayer_plugin].height),'" src="https://www.youtube.com/embed/','%1','?',get(youtubeplayer_settings.parameters),'" frameborder="0" allowfullscreen][/iframe]');
 					copy(layer[youtubeplayer_plugin].html, iframecode);
 					set(layer[youtubeplayer_plugin].padding, 0);
@@ -76,58 +70,22 @@
 					set(layer[youtubeplayer_plugin].onloaded, youtubeplayer_plugin_ready() );
 				  ,
 					<!-- flash - embed the youtube flashplayer player -->
-					txtadd(embedurl, 'http://www.youtube.com/v/','%1','?version=3&amp;autoplay=1&amp;autohide=1&amp;controls=0&amp;loop=0&amp;modestbranding=0&amp;rel=0&amp;showinfo=0',get(youtubeplayer_settings.parameters));
-
-					
-		
+					txtadd(embedurl, 'http://www.youtube.com/v/','%1','?version=3&amp;',get(youtubeplayer_settings.parameters));
 					set(layer[youtubeplayer_plugin].onloaded, registercontentsize(640,390); youtubeplayer_plugin_ready(); );
 					copy(layer[youtubeplayer_plugin].url, embedurl);
-					}
-					
 				  );
 			  );
-
-			<!-- addlayer(close); 
-			set(layer[close].type, image); 
-			set(layer[close].url, 'gui_menu/btn_x.png'); 
-			set(layer[close].zorder, 9999991); 
-			set(layer[close].align, topright); 
-			set(layer[close].x, 23%); 
-			set(layer[close].y, 18%); 
-			set(layer[close].width, '30px'); 
-			set(layer[close].height, '30px'); 
-			set(layer[close].onclick, youtubeplayer_close() ); -->
-			
-			addlayer('close_popup_ytb', close_ytb);
-			set(close_ytb,
-				url='gui_menu/btn_x.png',
-				align=righttop,
-				edge=center,
-				scale=0.5,
-				x='23.5%',
-				y='20%',
-				zorder=9999991,
-				alpha=0.6,
-				onover='tween(alpha,1)',
-				onout='tween(alpha,0.6)',
-				ondown='tween(alpha,1)',
-				onup='tween(alpha,0.25)',
-				onclick='youtubeplayer_close()'
-			);
-		);
 		  );
 	</action>
 
 	<action name="youtubeplayer_plugin_ready">
 		if(layer[youtubeplayer_plugin],
 			tween(layer[youtubeplayer_plugin].alpha, 1.0);
-			set(layer[close_popup_ytb].visible, true);
 		  );
 	</action>
 
 	<action name="youtubeplayer_close">
 		set(layer[youtubeplayer_bg].onclick, null);
-		set(layer[close_popup_ytb].visible, false);
 
 		tween(layer[youtubeplayer_plugin].alpha, 0.0, 0.25, default);
 
@@ -138,4 +96,3 @@
 	</action>
 
 </krpano>
-

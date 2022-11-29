@@ -9,7 +9,7 @@
     <include url="option.xml" />
     <include url="update.xml" />
  <include url="skin/vtourskin.xml" />
-    <include url="plugins/popup_blur.xml" />
+    <!-- <include url="plugins/popup_blur.xml" /> -->
     <include url="plugins/youtube_player.xml" />
     <include url="plugins/showtext.xml" />
 
@@ -469,6 +469,8 @@
 		</image>
 		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="-36.871" atv="-8.151" distorted="false" zoom="false" linkedscene="scene_18" />
 		<hotspot name="spot2" style="skin_hotspotstyle_move" ath="177.941" atv="3.118" distorted="false" zoom="false" linkedscene="scene_26" />
+		<hotspot name="spot3" style="skin_hotspotstyle_youtube"  ath="12.987" atv="11.621" html="Youtube" distorted="false" zoom="false" onhover="showInfo('Thông tin về trường')"  
+         onclick=" youtubeplayer_open('SpHn3q0cFMc');" />
 
 	</scene>
 
@@ -509,6 +511,8 @@
 			<cube url="panos/28.tiles/pano_%s.jpg" />
 		</image>
 		<hotspot name="spot1" style="skin_hotspotstyle_move" ath="90.794" atv="17.170" distorted="false" zoom="false" linkedscene="scene_3" />
+		<hotspot name="spot2" style="skin_hotspotstyle_youtube"  ath="12.987" atv="11.621" html="Youtube" distorted="false" zoom="false" onhover="showInfo('Thông tin về trường')"  
+         onclick=" youtubeplayer_open('pO8LsFr5zp4');" />
 
 	</scene>
 
